@@ -1,3 +1,5 @@
+using WorkLogger.Infrastructure.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +8,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -21,5 +25,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+const string origin = "http://localhost:4200";
+app.UseCors(options => options.AllowAnyMethod().AllowAnyHeader().WithOrigins(origin));
 
 app.Run();

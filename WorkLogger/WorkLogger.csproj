@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WorkLogger.Application\WorkLogger.Application.csproj" />
+    <ProjectReference Include="..\WorkLogger.Infrastructure\WorkLogger.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

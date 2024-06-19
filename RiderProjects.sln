@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkLogger.Domain", "WorkLo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkLogger.Infrastructure", "WorkLogger.Infrastructure\WorkLogger.Infrastructure.csproj", "{EBB58683-2F7A-4F10-9B13-3AA271E570D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkLogger.Tests", "WorkLogger.Tests\WorkLogger.Tests.csproj", "{C83942D6-F7FD-4EE2-BB36-5B63EECA7B54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{EBB58683-2F7A-4F10-9B13-3AA271E570D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBB58683-2F7A-4F10-9B13-3AA271E570D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBB58683-2F7A-4F10-9B13-3AA271E570D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C83942D6-F7FD-4EE2-BB36-5B63EECA7B54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C83942D6-F7FD-4EE2-BB36-5B63EECA7B54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C83942D6-F7FD-4EE2-BB36-5B63EECA7B54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C83942D6-F7FD-4EE2-BB36-5B63EECA7B54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
