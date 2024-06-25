@@ -16,8 +16,4 @@
     <ProjectReference Include="..\WorkLogger.Infrastructure\WorkLogger.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

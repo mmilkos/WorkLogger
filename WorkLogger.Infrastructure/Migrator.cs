@@ -6,32 +6,38 @@ namespace WorkLogger.Infrastructure;
 
 public class Migrator
 {
-    private const string scriptsFolder = "Scripts";
-    public static void Migrate(string connectionString)
+    public static void Migrate(string connectionString, string fullPathToScripts)
     {
         EnsureDatabase.For.SqlDatabase(connectionString);
 
         var upgrader =
             DeployChanges.To
                 .SqlDatabase(connectionString)
-                .WithScriptsFromFileSystem(Path.Combine(
-                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                    scriptsFolder
-                ))
+                .WithScriptsFromFileSystem(fullPathToScripts)
                 .WithTransaction()
                 .LogToConsole()
                 .Build();
 
-        var result = upgrader.PerformUpgrade();
-        
-        if (!result.Successful)
+        try
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(result.Error);
-            Console.ResetColor();
-            return;
+            var result = upgrader.PerformUpgrade();
+            if (!result.Successful)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(result.Error);
+                Console.ResetColor();
+                return;
+            }
         }
-
+        catch (DirectoryNotFoundException e)
+        {
+            Console.WriteLine(e);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Success!");
         Console.ResetColor();

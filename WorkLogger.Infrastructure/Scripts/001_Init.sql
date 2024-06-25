@@ -1,0 +1,34 @@
+﻿CREATE TABLE Companies
+(
+    Id INT PRIMARY KEY IDENTITY,
+    Name NVARCHAR(MAX) NOT NULL,
+    CEO_Id INT NULL
+);
+
+CREATE TABLE Users
+(
+    Id INT PRIMARY KEY IDENTITY,
+    CompanyId INT NOT NULL,
+    Name NVARCHAR(MAX) NOT NULL,
+    Surname NVARCHAR(MAX) NOT NULL,
+    UserName NVARCHAR(MAX) NOT NULL,
+    Role INT NOT NULL,
+    PasswordHash VARBINARY(MAX) NOT NULL,
+    PasswordSalt VARBINARY(MAX) NOT NULL,
+    FOREIGN KEY (CompanyId) REFERENCES Companies(Id)
+);
+
+ALTER TABLE Companies
+    ADD FOREIGN KEY (CEO_Id) REFERENCES Users(Id);
+
+CREATE TABLE UserTasks
+(
+    Id INT PRIMARY KEY IDENTITY,
+    AssignedUserId INT NOT NULL,
+    AuthorId INT NOT NULL,
+    Name NVARCHAR(MAX) NOT NULL,
+    Description NVARCHAR(MAX) NOT NULL,
+    LoggedHours FLOAT NOT NULL,
+    FOREIGN KEY (AssignedUserId) REFERENCES Users(Id),
+    FOREIGN KEY (AuthorId) REFERENCES Users(Id)
+);
