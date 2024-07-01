@@ -1,25 +1,35 @@
 ﻿using MediatR;
+using WorkLogger.Domain.Common;
 using WorkLogger.Domain.Entities;
 using WorkLogger.Domain.Interfaces;
 
 namespace WorkLogger.Application._Commands.Companies;
 
-public class RegisterCompanyCommandHandler : IRequestHandler<RegisterCompanyCommand>
+public class RegisterCompanyCommandHandler : IRequestHandler<RegisterCompanyCommand, OperationResult<Unit>>
 {
     private IWorkLoggerRepository _repository;
     public RegisterCompanyCommandHandler(IWorkLoggerRepository repository)
     {
         _repository = repository;
     }
-    public async Task<Unit> Handle(RegisterCompanyCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<Unit>> Handle(RegisterCompanyCommand request, CancellationToken cancellationToken)
     {
+        var result = new OperationResult<Unit>();
+        
         var dto = request.Dto;
 
         var company = new Company();
         company.Name = dto.Name;
-
-        await _repository.AddCompanyAsync(company);
         
-        return Unit.Value;
+        try
+        {
+            await _repository.AddCompanyAsync(company);
+        }
+        catch (Exception e)
+        {
+            result.AddError(e.Message);
+        }
+        
+        return result;
     }
 }

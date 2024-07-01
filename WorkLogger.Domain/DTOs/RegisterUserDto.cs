@@ -8,6 +8,6 @@ public class RegisterUserDto
     public string Name { get; set; }
     public string Surname { get; set; }
     public string UserName { get; set; }
-    public Role Role { get; set; }
+    public Roles Roles { get; set; }
    public string password { get; set; }
 }

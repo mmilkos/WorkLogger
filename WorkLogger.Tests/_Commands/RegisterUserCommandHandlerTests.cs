@@ -3,10 +3,10 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WorkLogger.Application._Commands;
 using WorkLogger.Application._Commands.Users;
+using WorkLogger.Domain;
 using WorkLogger.Domain.DTOs;
 using WorkLogger.Domain.Entities;
 using WorkLogger.Domain.Enums;
-using WorkLogger.Domain.Exceptions;
 using WorkLogger.Infrastructure.Repositories;
 using WorkLogger.Tests.Common;
 
@@ -28,7 +28,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Name = "John",
             Surname = "Doe",
             UserName = "johndoe",
-            Role = Role.Employee,
+            Roles = Roles.Employee,
             password = "password123"
         };
         
@@ -42,13 +42,13 @@ public class RegisterUserCommandHandlerTests : BaseTests
         var user = await _dbContext.Users.FirstOrDefaultAsync();
 
         //Assert
-        result.Should().Be(Unit.Value);
+        result.Success.Should().BeTrue();
         user.Should().NotBeNull();
         user.CompanyId.Should().Be(request.CompanyId);
         user.Name.Should().Be(request.Name);
         user.Surname.Should().Be(request.Surname);
         user.UserName.Should().Be(request.UserName);
-        user.Role.Should().Be(request.Role);
+        user.Role.Should().Be(request.Roles);
     }
     
     [Fact]
@@ -65,7 +65,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Name = "John",
             Surname = "Doe",
             UserName = "johndoe",
-            Role = Role.Employee,
+            Roles = Roles.Employee,
             password = "password123"
         };
         
@@ -77,11 +77,9 @@ public class RegisterUserCommandHandlerTests : BaseTests
         var result = await handler.Handle(command, CancellationToken.None);
 
         var user = await _dbContext.Users.FirstOrDefaultAsync();
-        
-        var updatedCompany = await _dbContext.Companies.FirstOrDefaultAsync();
 
         //Assert
-        result.Should().Be(Unit.Value);
+        result.Success.Should().BeTrue();
         user.Should().NotBeNull();
         user.CompanyId.Should().Be(request.CompanyId);
     }
@@ -101,7 +99,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Name = "John",
             Surname = "Doe",
             UserName = "johndoe",
-            Role = Role.CEO,
+            Roles = Roles.CEO,
             password = "password123"
         };
         
@@ -117,13 +115,13 @@ public class RegisterUserCommandHandlerTests : BaseTests
         var updatedCompany = await _dbContext.Companies.FirstOrDefaultAsync();
 
         //Assert
-        result.Should().Be(Unit.Value);
+        result.Success.Should().BeTrue();
         user.Should().NotBeNull();
         user.CompanyId.Should().Be(request.CompanyId);
     }
     
     [Fact]
-    public async Task UserAlreadyExists_ShouldReturnUserAlreadyExistException()
+    public async Task UserAlreadyExists_ShouldContainUserAlreadyExists()
     {
         //Arrange
         var repository  = new WorkLoggerRepository(_dbContext);
@@ -138,7 +136,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Name = user.Name,
             Surname = user.Surname,
             UserName =  user.UserName,
-            Role = user.Role,
+            Roles = user.Role,
             password = "password123"
         };
         
@@ -146,8 +144,13 @@ public class RegisterUserCommandHandlerTests : BaseTests
         var command = new RegisterUserCommand(request);
 
         var handler = new RegisterUserCommandHandler(repository);
-        
-        var exception = await Assert.ThrowsAsync<UserAlreadyExistException>(() => handler.Handle(command, CancellationToken.None));
+
+        var result = await handler.Handle(command, CancellationToken.None);
+
+        result.Success.Should().BeFalse();
+        result.ErrorsList.Should().Contain(Errors.UserAlreadyExist);
+        result.ErrorsList.Count.Should().Be(1);
+        result.StatusCode.Should().Be((int) StatusCodesEnum.BadRequest);
     }
     
     
@@ -163,7 +166,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Name = "John",
             Surname = "Doe",
             UserName =  "johndoe",
-            Role = Role.Employee,
+            Roles = Roles.Employee,
             password = "password123"
         };
         
@@ -171,8 +174,13 @@ public class RegisterUserCommandHandlerTests : BaseTests
         var command = new RegisterUserCommand(request);
 
         var handler = new RegisterUserCommandHandler(repository);
-        
-        await Assert.ThrowsAsync<CompanyDoesNotExistException>(() => handler.Handle(command, CancellationToken.None));
+
+        var result = await handler.Handle(command, CancellationToken.None);
+
+        result.Success.Should().BeFalse();
+        result.ErrorsList.Should().Contain(Errors.CompanyDoesNotExist);
+        result.ErrorsList.Count.Should().Be(1);
+        result.StatusCode.Should().Be((int) StatusCodesEnum.BadRequest);
     }
     
     [Fact]
@@ -189,7 +197,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Name = "John",
             Surname = "Doe",
             UserName = "johndoe",
-            Role = (Role)Int32.MaxValue,
+            Roles = (Roles)Int32.MaxValue,
             password = "password123"
         };
         
@@ -197,7 +205,12 @@ public class RegisterUserCommandHandlerTests : BaseTests
         var command = new RegisterUserCommand(request);
 
         var handler = new RegisterUserCommandHandler(repository);
-        
-        await Assert.ThrowsAsync<RoleDoesNotExistException>(() => handler.Handle(command, CancellationToken.None));
+
+        var result = await handler.Handle(command, CancellationToken.None);
+
+        result.Success.Should().BeFalse();
+        result.ErrorsList.Should().Contain(Errors.RoleDoesNotExist);
+        result.ErrorsList.Count.Should().Be(1);
+        result.StatusCode.Should().Be((int) StatusCodesEnum.BadRequest);
     }
 }

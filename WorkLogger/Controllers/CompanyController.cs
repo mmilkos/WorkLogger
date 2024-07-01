@@ -14,17 +14,11 @@ public class CompanyController(IMediator mediator) : ControllerBase
     [HttpPost("register")]
     public async Task<ActionResult> RegisterOrganization(RegisterCompanyDto dto)
     {
-        try
-        {
-            await _mediator.Send(new RegisterCompanyCommand(dto));
-            return Ok();
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+   
+        var result = await _mediator.Send(new RegisterCompanyCommand(dto));
         
+        if (result.Success) return Created();
+
+        return StatusCode(500, result.ErrorsList);
     }
 }

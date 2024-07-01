@@ -14,15 +14,9 @@ public class AccountController(IMediator mediator) : ControllerBase
     [HttpPost("register")]
     public async Task<ActionResult> RegisterUser(RegisterUserDto registerDto)
     {
-        try
-        {
-            await _mediator.Send(new RegisterUserCommand(registerDto));
-            return Ok();
+       
+        var result = await _mediator.Send(new RegisterUserCommand(registerDto));
 
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, e.Message);
-        }
+        return StatusCode(result.StatusCode, result.ErrorsList);
     }
 }

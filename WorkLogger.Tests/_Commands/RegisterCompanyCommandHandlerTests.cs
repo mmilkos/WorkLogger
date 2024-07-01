@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WorkLogger.Application._Commands.Companies;
+using WorkLogger.Domain.Common;
 using WorkLogger.Domain.DTOs;
 using WorkLogger.Tests.Common;
 
@@ -25,7 +26,8 @@ public class RegisterCompanyCommandHandlerTests : BaseTests
         var company = await _dbContext.Companies.FirstOrDefaultAsync();
         
         //Assert
-        result.Should().Be(Unit.Value);
+        result.Success.Should().BeTrue();
+        result.ErrorsList.Count.Should().Be(0);
         company.Should().NotBeNull();
         company.Name.Should().Be(request.Name);
     }

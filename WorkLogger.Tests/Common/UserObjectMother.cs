@@ -15,7 +15,7 @@ public static class UserObjectMother
         string name = "John", 
         string surname = "Doe", 
         string userName = "johndoe", 
-        Role role = Role.Employee,
+        Roles roles = Roles.Employee,
         string password = "password")
     {
         User user;
@@ -28,7 +28,7 @@ public static class UserObjectMother
                 Name = name,
                 Surname = surname,
                 UserName = userName,
-                Role = role,
+                Role = roles,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password)),
                 PasswordSalt = hmac.Key
             };

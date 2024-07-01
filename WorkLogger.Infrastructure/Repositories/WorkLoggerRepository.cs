@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using WorkLogger.Domain.Entities;
 using WorkLogger.Domain.Interfaces;
 using WorkLogger.Infrastructure.Persistence;
@@ -30,7 +31,12 @@ public class WorkLoggerRepository : IWorkLoggerRepository
     {
         DbContext.Companies.Update(company);
         await DbContext.SaveChangesAsync();
-        DbContext.Companies.ToList();
+    }
+    
+    public async Task<List<Company>> GetAllCompaniesAsync()
+    {
+        var companies = await DbContext.Companies.ToListAsync();
+        return companies;
     }
     
     //Users
@@ -45,9 +51,8 @@ public class WorkLoggerRepository : IWorkLoggerRepository
         await DbContext.SaveChangesAsync();
     }
 
-    public async Task<List<Company>> GetAllCompaniesAsync()
+    public async Task<IDbContextTransaction> BeginTransactionAsync()
     {
-       var companies = await DbContext.Companies.ToListAsync();
-       return companies;
+        return await DbContext.Database.BeginTransactionAsync();
     }
 }
