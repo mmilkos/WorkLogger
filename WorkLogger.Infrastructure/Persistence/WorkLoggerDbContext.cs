@@ -11,88 +11,37 @@ public class WorkLoggerDbContext(DbContextOptions<WorkLoggerDbContext> options) 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-         // Companies
-        modelBuilder.Entity<Company>()
-            .HasKey(c => c.Id);
+        modelBuilder.Entity<Company>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Name).HasMaxLength(255);
+        });
 
-        modelBuilder.Entity<Company>()
-            .Property(c => c.Name)
-            .IsRequired();
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.Surname).HasMaxLength(255);
+            entity.Property(e => e.UserName).HasMaxLength(255);
+            entity.Property(e => e.PasswordHash).HasMaxLength(64);
+            entity.Property(e => e.PasswordSalt).HasMaxLength(16);
+        });
 
-        modelBuilder.Entity<Company>()
-            .HasOne(c => c.CEO)
-            .WithOne()
-            .HasForeignKey<Company>(c => c.Id)
-            .IsRequired(true)
-            .OnDelete(DeleteBehavior.Restrict);
+        modelBuilder.Entity<UserTask>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.Description).HasColumnType("TEXT");
+            entity.Property(e => e.LoggedHours).HasColumnType("FLOAT");
 
-        modelBuilder.Entity<Company>()
-            .HasMany(c => c.Employees)
-            .WithOne(u => u.Company)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+            // One-to-many relationships with User
+            entity.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(ut => ut.AssignedUserId);
 
-        // Users
-        modelBuilder.Entity<User>()
-            .HasKey(u => u.Id);
-
-        modelBuilder.Entity<User>()
-            .Property(u => u.Name)
-            .IsRequired();
-
-        modelBuilder.Entity<User>()
-            .Property(u => u.Surname)
-            .IsRequired();
-
-        modelBuilder.Entity<User>()
-            .Property(u => u.UserName)
-            .IsRequired();
-
-        modelBuilder.Entity<User>()
-            .Property(u => u.Role)
-            .IsRequired();
-
-        modelBuilder.Entity<User>()
-            .Property(u => u.PasswordHash)
-            .IsRequired();
-
-        modelBuilder.Entity<User>()
-            .Property(u => u.PasswordSalt)
-            .IsRequired();
-
-        modelBuilder.Entity<User>()
-            .HasOne(u => u.Company)
-            .WithMany(c => c.Employees)
-            .IsRequired();
-
-        // UserTasks
-        modelBuilder.Entity<UserTask>()
-            .HasKey(ut => ut.Id);
-
-        modelBuilder.Entity<UserTask>()
-            .Property(ut => ut.Name)
-            .IsRequired();
-
-        modelBuilder.Entity<UserTask>()
-            .Property(ut => ut.Description)
-            .IsRequired();
-
-        modelBuilder.Entity<UserTask>()
-            .Property(ut => ut.LoggedHours)
-            .IsRequired();
-
-        modelBuilder.Entity<UserTask>()
-            .HasOne(ut => ut.AssignedUser)
-            .WithMany()
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
-
-        modelBuilder.Entity<UserTask>()
-            .HasOne(ut => ut.Author)
-            .WithMany()
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
-        
-        base.OnModelCreating(modelBuilder);
+            entity.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(ut => ut.AuthorId);
+        });
     }
 };

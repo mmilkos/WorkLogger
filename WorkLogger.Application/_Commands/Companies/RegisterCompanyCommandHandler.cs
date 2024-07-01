@@ -4,8 +4,13 @@ using WorkLogger.Domain.Interfaces;
 
 namespace WorkLogger.Application._Commands.Companies;
 
-public class RegisterCompanyCommandHandler(IWorkLoggerRepository repository) : IRequestHandler<RegisterCompanyCommand>
+public class RegisterCompanyCommandHandler : IRequestHandler<RegisterCompanyCommand>
 {
+    private IWorkLoggerRepository _repository;
+    public RegisterCompanyCommandHandler(IWorkLoggerRepository repository)
+    {
+        _repository = repository;
+    }
     public async Task<Unit> Handle(RegisterCompanyCommand request, CancellationToken cancellationToken)
     {
         var dto = request.Dto;
@@ -13,7 +18,7 @@ public class RegisterCompanyCommandHandler(IWorkLoggerRepository repository) : I
         var company = new Company();
         company.Name = dto.Name;
 
-        await repository.AddCompanyAsync(company);
+        await _repository.AddCompanyAsync(company);
         
         return Unit.Value;
     }

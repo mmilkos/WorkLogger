@@ -5,5 +5,7 @@ namespace WorkLogger.Domain.Enums;
 public enum ExceptionsEnum
 {
     UserAlreadyExistException,
-    RoleDoesNotExistException
+    RoleDoesNotExistException,
+    CompanyDoesNotExistException,
+    DataBaseDisposeFailureException
 }

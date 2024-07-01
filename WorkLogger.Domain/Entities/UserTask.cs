@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace WorkLogger.Domain.Entities;
 
-namespace WorkLogger.Domain.Entities;
-
-[Table("UserTasks")]
 public class UserTask
 {
     public required int Id { get; set; }

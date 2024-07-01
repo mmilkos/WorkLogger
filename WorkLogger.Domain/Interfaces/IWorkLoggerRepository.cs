@@ -5,6 +5,10 @@ namespace WorkLogger.Domain.Interfaces;
 
 public interface IWorkLoggerRepository
 {
-    Task<bool> IsUserInDbAsync(string userName);
     Task AddCompanyAsync(Company company);
+    Task<Company?> FindCompanyByIdAsync(int companyId);
+    Task UpdateCompanyAsync(Company company);
+    Task<bool> IsUserInDbAsync(string userName);
+    Task AddUserAsync(User user);
+    Task<List<Company>> GetAllCompaniesAsync();
 }

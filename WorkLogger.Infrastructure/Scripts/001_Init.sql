@@ -1,34 +1,27 @@
-﻿CREATE TABLE Companies
-(
-    Id INT PRIMARY KEY IDENTITY,
-    Name NVARCHAR(MAX) NOT NULL,
-    CEO_Id INT NULL
+﻿CREATE TABLE Companies (
+                           Id INT PRIMARY KEY IDENTITY,
+                           Name NVARCHAR(255)
 );
 
-CREATE TABLE Users
-(
-    Id INT PRIMARY KEY IDENTITY,
-    CompanyId INT NOT NULL,
-    Name NVARCHAR(MAX) NOT NULL,
-    Surname NVARCHAR(MAX) NOT NULL,
-    UserName NVARCHAR(MAX) NOT NULL,
-    Role INT NOT NULL,
-    PasswordHash VARBINARY(MAX) NOT NULL,
-    PasswordSalt VARBINARY(MAX) NOT NULL,
-    FOREIGN KEY (CompanyId) REFERENCES Companies(Id)
+CREATE TABLE Users (
+                       Id INT PRIMARY KEY IDENTITY,
+                       CompanyId INT,
+                       Name NVARCHAR(255),
+                       Surname NVARCHAR(255),
+                       UserName NVARCHAR(255),
+                       Role INT,
+                       PasswordHash VARBINARY(64),
+                       PasswordSalt VARBINARY(16),
+                       FOREIGN KEY (CompanyId) REFERENCES Companies(Id) ON DELETE CASCADE
 );
 
-ALTER TABLE Companies
-    ADD FOREIGN KEY (CEO_Id) REFERENCES Users(Id);
-
-CREATE TABLE UserTasks
-(
-    Id INT PRIMARY KEY IDENTITY,
-    AssignedUserId INT NOT NULL,
-    AuthorId INT NOT NULL,
-    Name NVARCHAR(MAX) NOT NULL,
-    Description NVARCHAR(MAX) NOT NULL,
-    LoggedHours FLOAT NOT NULL,
-    FOREIGN KEY (AssignedUserId) REFERENCES Users(Id),
-    FOREIGN KEY (AuthorId) REFERENCES Users(Id)
+CREATE TABLE UserTasks (
+                           Id INT PRIMARY KEY IDENTITY,
+                           AssignedUserId INT NULL,
+                           AuthorId INT NULL,
+                           Name NVARCHAR(255),
+                           Description NVARCHAR(MAX),
+                           LoggedHours FLOAT,
+                           FOREIGN KEY (AssignedUserId) REFERENCES Users(Id) ON DELETE NO ACTION,
+                           FOREIGN KEY (AuthorId) REFERENCES Users(Id) ON DELETE NO ACTION
 );

@@ -12,9 +12,13 @@ public static class ServiceCollectionExtension
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("WorkLogger");
+        var testConnectionString = configuration.GetConnectionString("WorkLoggerTests");
         var scripts = configuration.GetConnectionString("Scripts");
+        
+        
         services.AddDbContext<WorkLoggerDbContext>(options => options.UseSqlServer(connectionString));
         services.AddScoped<IWorkLoggerRepository, WorkLoggerRepository>();
         Migrator.Migrate(connectionString, scripts);
+        Migrator.Migrate(testConnectionString, scripts);
     }
 }

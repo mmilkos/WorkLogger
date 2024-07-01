@@ -13,16 +13,41 @@ public class WorkLoggerRepository : IWorkLoggerRepository
     {
         DbContext = dbContext;
     }
-
-
-    public async Task<bool> IsUserInDbAsync(string userName)
-    {
-         return await DbContext.Users.AnyAsync(user => user.UserName == userName.ToLower());
-    }
-
+    
+    //Companies
     public async Task AddCompanyAsync(Company company)
     {
          await DbContext.Companies.AddAsync(company);
          await DbContext.SaveChangesAsync();
+    }
+
+    public async Task<Company?> FindCompanyByIdAsync(int id)
+    {
+        return await DbContext.Companies.FindAsync(id);
+    }
+
+    public async Task UpdateCompanyAsync(Company company)
+    {
+        DbContext.Companies.Update(company);
+        await DbContext.SaveChangesAsync();
+        DbContext.Companies.ToList();
+    }
+    
+    //Users
+    public async Task<bool> IsUserInDbAsync(string userName)
+    {
+        return await DbContext.Users.AnyAsync(user => user.UserName == userName.ToLower());
+    }
+
+    public async Task AddUserAsync(User user)
+    {
+        await DbContext.Users.AddAsync(user);
+        await DbContext.SaveChangesAsync();
+    }
+
+    public async Task<List<Company>> GetAllCompaniesAsync()
+    {
+       var companies = await DbContext.Companies.ToListAsync();
+       return companies;
     }
 }
