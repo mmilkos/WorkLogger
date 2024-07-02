@@ -13,10 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WorkLogger.Application\WorkLogger.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\WorkLogger.Infrastructure\WorkLogger.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
