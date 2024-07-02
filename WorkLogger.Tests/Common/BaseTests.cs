@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using WorkLogger.Domain.Exceptions;
 using WorkLogger.Domain.Interfaces;
 using WorkLogger.Infrastructure.Persistence;
@@ -11,6 +12,7 @@ public class BaseTests : IDisposable
 {
     protected readonly WorkLoggerDbContext _dbContext;
     protected readonly IMediator _mediator;
+    private IDbContextTransaction _transaction;
     
     public BaseTests()
     {
@@ -29,26 +31,14 @@ public class BaseTests : IDisposable
         
         var provider = services.BuildServiceProvider();
         _mediator = provider.GetRequiredService<IMediator>();
-
-        cleanDatabase();
+        
+        _transaction = _dbContext.Database.BeginTransaction();
     }
 
     public void Dispose()
     {
-        cleanDatabase();
-     
-        var anyTasks = _dbContext.UserTasks.Any();
-        var anyUsers = _dbContext.Users.Any();
-        var anyCompanies = _dbContext.Companies.Any();
-
-        if (anyTasks || anyUsers || anyCompanies) throw new DataBaseDisposeFailureException();
-    }
-
-    private void cleanDatabase()
-    {
-        _dbContext.Database.ExecuteSqlRaw("DELETE FROM UserTasks");
-        _dbContext.Database.ExecuteSqlRaw("DELETE FROM Users");
-        _dbContext.Database.ExecuteSqlRaw("DELETE FROM Companies");
-        _dbContext.SaveChanges();
+        _transaction.Rollback();
+        _transaction.Dispose();
+        _dbContext.Dispose();
     }
 }

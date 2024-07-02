@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using WorkLogger.Domain.Common;
 using WorkLogger.Domain.Entities;
+using WorkLogger.Domain.Enums;
 using WorkLogger.Domain.Interfaces;
 
 namespace WorkLogger.Application._Commands.Companies;
@@ -28,6 +29,7 @@ public class RegisterCompanyCommandHandler : IRequestHandler<RegisterCompanyComm
         catch (Exception e)
         {
             result.AddError(e.Message);
+            result.ErrorType = ErrorTypesEnum.ServerError;
         }
         
         return result;

@@ -27,7 +27,7 @@ public static class UserObjectMother
                 CompanyId = companyId,
                 Name = name,
                 Surname = surname,
-                UserName = userName,
+                UserName = userName.ToLower(),
                 Role = roles,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password)),
                 PasswordSalt = hmac.Key

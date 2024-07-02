@@ -69,6 +69,15 @@ namespace WorkLogger.Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &quot;Incorrect username or password&quot;.
+        /// </summary>
+        public static string InvalidCredentials {
+            get {
+                return ResourceManager.GetString("InvalidCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Role does not exist&quot;.
         /// </summary>
         public static string RoleDoesNotExist {

@@ -27,4 +27,7 @@
     <data name="RoleDoesNotExist" xml:space="preserve">
         <value>"Role does not exist"</value>
     </data>
+    <data name="InvalidCredentials" xml:space="preserve">
+        <value>"Incorrect username or password"</value>
+    </data>
 </root>

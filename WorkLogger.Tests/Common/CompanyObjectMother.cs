@@ -7,7 +7,7 @@ namespace WorkLogger.Tests.Common;
 
 public static class CompanyObjectMother
 {
-    public static async Task<Company> CreateAsync(IWorkLoggerRepository repository, string name, List<User> employees)
+    public static async Task<Company> CreateAsync(IWorkLoggerRepository repository, string name)
     {
         var company = new Company
         {

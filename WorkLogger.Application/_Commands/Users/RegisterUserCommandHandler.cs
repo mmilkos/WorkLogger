@@ -33,7 +33,7 @@ public class RegisterUserCommandHandler(IWorkLoggerRepository repository) : IReq
 
         if (operationResult.Success == false)
         {
-            operationResult.StatusCode = (int)StatusCodesEnum.BadRequest;
+            operationResult.ErrorType = ErrorTypesEnum.BadRequest;
             return operationResult;
         }
         
@@ -48,30 +48,22 @@ public class RegisterUserCommandHandler(IWorkLoggerRepository repository) : IReq
                 CompanyId = dto.CompanyId,
                 Name = dto.Name,
                 Surname = dto.Surname,
-                UserName = dto.UserName,
+                UserName = dto.UserName.ToLower(),
                 Role = roles,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(dto.password)),
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(dto.Password)),
                 PasswordSalt = hmac.Key
             };
         }
-
-        await using (var transaction = await _repository.BeginTransactionAsync())
+        
+        try
         {
-            try
-            {
-                await _repository.AddUserAsync(user);
-                await _repository.UpdateCompanyAsync(company);
-               await transaction.CommitAsync(cancellationToken);
-            }
-            catch (Exception e)
-            {
-                await transaction.RollbackAsync(cancellationToken);
-                operationResult.AddError(e.Message);
-                operationResult.StatusCode = (int)StatusCodesEnum.InternalServerError;
-            }
+            await _repository.AddUserAsync(user); 
         }
-
-        operationResult.StatusCode = (int)StatusCodesEnum.Ok;
+        catch (Exception e)
+        {
+            operationResult.AddError(e.Message);
+        }
+        
         return operationResult;
     }
 }

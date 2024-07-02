@@ -20,7 +20,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         //Arrange
         var repository  = new WorkLoggerRepository(_dbContext);
         
-        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany", new List<User>());
+        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany");
         
         var request = new RegisterUserDto()
         {
@@ -29,7 +29,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Surname = "Doe",
             UserName = "johndoe",
             Roles = Roles.Employee,
-            password = "password123"
+            Password = "password123"
         };
         
         //Act
@@ -57,7 +57,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         //Arrange
         var repository  = new WorkLoggerRepository(_dbContext);
         
-        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany", new List<User>());
+        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany");
         
         var request = new RegisterUserDto()
         {
@@ -66,7 +66,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Surname = "Doe",
             UserName = "johndoe",
             Roles = Roles.Employee,
-            password = "password123"
+            Password = "password123"
         };
         
         //Act
@@ -91,7 +91,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         //Arrange
         var repository  = new WorkLoggerRepository(_dbContext);
         
-        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany", new List<User>());
+        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany");
         
         var request = new RegisterUserDto()
         {
@@ -100,7 +100,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Surname = "Doe",
             UserName = "johndoe",
             Roles = Roles.CEO,
-            password = "password123"
+            Password = "password123"
         };
         
         //Act
@@ -126,7 +126,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         //Arrange
         var repository  = new WorkLoggerRepository(_dbContext);
         
-        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany", new List<User>());
+        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany");
 
         var user = await UserObjectMother.CreateAsync(repository: repository, companyId: company.Id);
         
@@ -137,7 +137,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Surname = user.Surname,
             UserName =  user.UserName,
             Roles = user.Role,
-            password = "password123"
+            Password = "password123"
         };
         
         //Act
@@ -150,7 +150,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         result.Success.Should().BeFalse();
         result.ErrorsList.Should().Contain(Errors.UserAlreadyExist);
         result.ErrorsList.Count.Should().Be(1);
-        result.StatusCode.Should().Be((int) StatusCodesEnum.BadRequest);
+        result.ErrorType.Should().Be(ErrorTypesEnum.BadRequest);
     }
     
     
@@ -167,7 +167,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Surname = "Doe",
             UserName =  "johndoe",
             Roles = Roles.Employee,
-            password = "password123"
+            Password = "password123"
         };
         
         //Act
@@ -180,7 +180,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         result.Success.Should().BeFalse();
         result.ErrorsList.Should().Contain(Errors.CompanyDoesNotExist);
         result.ErrorsList.Count.Should().Be(1);
-        result.StatusCode.Should().Be((int) StatusCodesEnum.BadRequest);
+        result.ErrorType.Should().Be(ErrorTypesEnum.BadRequest);
     }
     
     [Fact]
@@ -189,7 +189,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         //Arrange
         var repository  = new WorkLoggerRepository(_dbContext);
         
-        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany", new List<User>());
+        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany");
         
         var request = new RegisterUserDto()
         {
@@ -198,7 +198,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Surname = "Doe",
             UserName = "johndoe",
             Roles = (Roles)Int32.MaxValue,
-            password = "password123"
+            Password = "password123"
         };
         
         //Act
@@ -211,6 +211,6 @@ public class RegisterUserCommandHandlerTests : BaseTests
         result.Success.Should().BeFalse();
         result.ErrorsList.Should().Contain(Errors.RoleDoesNotExist);
         result.ErrorsList.Count.Should().Be(1);
-        result.StatusCode.Should().Be((int) StatusCodesEnum.BadRequest);
+        result.ErrorType.Should().Be(ErrorTypesEnum.BadRequest);
     }
 }

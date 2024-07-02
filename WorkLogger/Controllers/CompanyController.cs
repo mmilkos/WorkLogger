@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WorkLogger.Application._Commands.Companies;
 using WorkLogger.Domain.DTOs;
+using WorkLogger.Domain.Enums;
 
 namespace WorkLogger.Controllers;
 
@@ -16,9 +17,13 @@ public class CompanyController(IMediator mediator) : ControllerBase
     {
    
         var result = await _mediator.Send(new RegisterCompanyCommand(dto));
-        
+
         if (result.Success) return Created();
 
-        return StatusCode(500, result.ErrorsList);
+        switch (result.ErrorType)
+        {
+            case ErrorTypesEnum.BadRequest: return BadRequest(result.ErrorsList);
+            default: return StatusCode(500, result.ErrorsList);
+        }
     }
 }

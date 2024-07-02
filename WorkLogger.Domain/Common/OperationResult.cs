@@ -1,4 +1,5 @@
-﻿
+﻿using WorkLogger.Domain.Enums;
+
 namespace WorkLogger.Domain.Common;
 
 public class OperationResult<T>
@@ -8,7 +9,7 @@ public class OperationResult<T>
     
     public T Data { get; set; }
     
-    public int StatusCode { get; set; }
+    public ErrorTypesEnum ErrorType { get; set; }
     
     public OperationResult()
     {

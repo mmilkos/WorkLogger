@@ -27,10 +27,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="_Queries\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\WorkLogger.Application\WorkLogger.Application.csproj" />
       <ProjectReference Include="..\WorkLogger.Domain\WorkLogger.Domain.csproj" />
       <ProjectReference Include="..\WorkLogger.Infrastructure\WorkLogger.Infrastructure.csproj" />
