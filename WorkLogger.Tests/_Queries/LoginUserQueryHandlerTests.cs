@@ -2,9 +2,7 @@
 using WorkLogger.Application._Queries.Users;
 using WorkLogger.Domain;
 using WorkLogger.Domain.DTOs;
-using WorkLogger.Domain.Entities;
 using WorkLogger.Domain.Enums;
-using WorkLogger.Domain.Interfaces;
 using WorkLogger.Infrastructure.Repositories;
 using WorkLogger.Tests.Common;
 
