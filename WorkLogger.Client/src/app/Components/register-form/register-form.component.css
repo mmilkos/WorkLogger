@@ -1,0 +1,10 @@
+@import 'ngx-toastr/toastr';
+.textColor, label
+{
+  color: #d0d2d6;
+}
+
+#toast-container > div {
+  opacity: 1 !important;
+}
+

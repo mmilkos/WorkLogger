@@ -23,7 +23,7 @@ public class AccountController(IMediator mediator) : ControllerBase
         switch (result.ErrorType)
         {
             case ErrorTypesEnum.BadRequest: return BadRequest(result.ErrorsList);
-            default: return StatusCode(500, result.ErrorsList);
+            default: return StatusCode(StatusCodes.Status500InternalServerError, result.ErrorsList);
         }
     }
 
@@ -37,7 +37,7 @@ public class AccountController(IMediator mediator) : ControllerBase
         switch (result.ErrorType)
         {
             case ErrorTypesEnum.Unauthorized: return Unauthorized(result.ErrorsList);
-            default: return StatusCode(500, result.ErrorsList);
+            default: return StatusCode(StatusCodes.Status500InternalServerError, result.ErrorsList);
         }
     }
 }

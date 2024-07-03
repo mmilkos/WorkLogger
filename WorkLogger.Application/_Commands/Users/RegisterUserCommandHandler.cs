@@ -62,6 +62,7 @@ public class RegisterUserCommandHandler(IWorkLoggerRepository repository) : IReq
         catch (Exception e)
         {
             operationResult.AddError(e.Message);
+            operationResult.ErrorType = ErrorTypesEnum.ServerError;
         }
         
         return operationResult;
