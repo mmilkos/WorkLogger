@@ -6,17 +6,17 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a routerLink="{{routesEnum.Register}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">Register</a></li>
+          <li *ngIf="!isLoggedIn"><a routerLink="{{routesEnum.Register}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">Register</a></li>
           <li><a routerLink="{{routesEnum.About}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">About</a></li>
-          <li><a routerLink="{{routesEnum.Teams}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">Teams</a></li>
+          <li *ngIf="isLoggedIn"><a routerLink="{{routesEnum.Teams}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">Teams</a></li>
         </ul>
 
-        <form [formGroup]="loginForm" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex" *ngIf="!isLoggedIn">
+        <form *ngIf="!isLoggedIn" [formGroup]="loginForm" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex">
           <input type="search" class="form-control me-2" placeholder="Login" aria-label="Search" formControlName="username">
           <input type="password" class="form-control me-2" placeholder="Password" aria-label="password" formControlName="password">
           <button (click)="login()" type="button" class="btn btn-outline-light me-2">Login</button>
         </form>
-        <form [formGroup]="loginForm" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex" *ngIf="isLoggedIn">
+        <form *ngIf="isLoggedIn" [formGroup]="loginForm" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex">
           <button (click)="logOut()" type="button" class="btn btn-outline-light me-2">Logout</button>
         </form>
       </div>

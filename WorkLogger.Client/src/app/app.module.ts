@@ -14,6 +14,8 @@ import { RegisterFormComponent } from './Components/register-form/register-form.
 import { AboutComponent } from './Components/about/about.component';
 import { TeamsComponent } from './Components/teams/teams.component';
 import { SideBarComponent } from './Components/side-bar/side-bar.component';
+import { AddUserFormComponent } from './Components/add-user-form/add-user-form.component';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { SideBarComponent } from './Components/side-bar/side-bar.component';
     RegisterFormComponent,
     AboutComponent,
     TeamsComponent,
-    SideBarComponent
+    SideBarComponent,
+    AddUserFormComponent
   ],
   imports: [
     BrowserModule,

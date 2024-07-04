@@ -10,7 +10,7 @@ const routes: Routes =
     {path: RoutesEnum.Register, component: RegisterFormComponent },
     {path: RoutesEnum.About, component: AboutComponent },
     {path: RoutesEnum.Teams, component: TeamsComponent },
-    {path: '**', component: RegisterFormComponent, pathMatch: 'full' },
+    {path: '**', component: AboutComponent, pathMatch: 'full' },
   ];
 
 @NgModule({

@@ -2,5 +2,6 @@
 {
   Register = "register",
   About = "about",
-  Teams = "teams"
+  Teams = "teams",
+  Create = "create"
 }
