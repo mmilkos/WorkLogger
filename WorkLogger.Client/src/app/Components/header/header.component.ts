@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import { AccountService } from '../../Services/account.service';
 import { LoginUserDto } from '../../DTOs/loginDto.model';
 import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
+import { RoutesEnum } from '../../enums/RoutesEnum';
+import { AccountService } from '../../services/account.service';
+
 
 @Component({
   selector: 'app-header',
@@ -11,8 +14,12 @@ import {ToastrService} from "ngx-toastr";
 })
 export class HeaderComponent
 {
+  routesEnum = RoutesEnum
 
-  constructor(private accountService: AccountService, private toastrService : ToastrService) {
+
+  constructor(private accountService: AccountService,
+              private toastrService : ToastrService,
+              private router: Router) {
   }
 
   loginForm = new FormGroup(
@@ -28,10 +35,14 @@ export class HeaderComponent
         username: this.loginForm.get('username')?.value || "",
         password: this.loginForm.get('password')?.value || ""
       }
+
     this.accountService.login(dto).subscribe(
-      ()=>
+      (response)=>
       {
+        this.accountService.setToken(response.jwtToken);
         this.toastrService.success("Logged in", "Succes")
+        this.router.navigateByUrl('/' + RoutesEnum.About)
+        this.loginForm.reset();
       },
       (error) => {
         error.error.forEach((error: string) =>
@@ -40,5 +51,15 @@ export class HeaderComponent
         })
       }
     );
+  }
+  logOut()
+  {
+    this.accountService.logOut();
+    this.toastrService.success("Logged out", "Success");
+    this.router.navigateByUrl('/' + RoutesEnum.Register);
+  }
+
+  get isLoggedIn(): boolean {
+    return this.accountService.isLoggedIn;
   }
 }

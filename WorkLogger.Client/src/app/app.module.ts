@@ -12,13 +12,17 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './Components/header/header.component';
 import { RegisterFormComponent } from './Components/register-form/register-form.component';
 import { AboutComponent } from './Components/about/about.component';
+import { TeamsComponent } from './Components/teams/teams.component';
+import { SideBarComponent } from './Components/side-bar/side-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     RegisterFormComponent,
-    AboutComponent
+    AboutComponent,
+    TeamsComponent,
+    SideBarComponent
   ],
   imports: [
     BrowserModule,
