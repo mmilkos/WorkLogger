@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkLogger.Application._Commands;
 using WorkLogger.Application._Queries.Users;
@@ -9,6 +10,7 @@ namespace WorkLogger.Controllers;
 
 [ApiController]
 [Route("api/account")]
+[AllowAnonymous]
 public class AccountController(IMediator mediator) : ControllerBase
 {
     private IMediator _mediator = mediator;

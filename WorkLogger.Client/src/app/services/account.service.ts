@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import { LoginUserDto } from '../DTOs/loginDto.model';
@@ -22,7 +22,7 @@ export class AccountService {
 
  public setToken(token: string): void
   {
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
     const decodedToken = jwt_decoder.jwtDecode(token) as any;
     this.currentUser = {
       companyId: decodedToken.CompanyId,
@@ -40,5 +40,11 @@ export class AccountService {
     localStorage.removeItem('token');
     this.currentUser = undefined;
     this.isLoggedIn = false;
+  }
+
+  getHeader(): HttpHeaders
+  {
+    var token = sessionStorage.getItem('token')
+    return new HttpHeaders().set('Authorization', 'Bearer ' + token)
   }
 }

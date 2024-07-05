@@ -1,0 +1,19 @@
+<div class="card mb-3" style="width: 50vw; margin: auto; top: 2rem; background-color: #242526">
+  <div class="card-body">
+    <form [formGroup]="addTeamForm">
+      <h2 class="card-title textColor">Add team</h2>
+      <div class="mb-3 d-flex">
+        <div class="flex-grow-1">
+          <label for="teamName" class="form-label">Name</label>
+          <input type="text" class="form-control"
+                 id="teamName" formControlName="teamName">
+          <div class="invalid-feedback" *ngIf="addTeamForm.controls['teamName'].invalid && addTeamForm.controls['teamName'].touched">
+            Team name is required
+          </div>
+        </div>
+          <button style="height: 50%; margin-top: 27px" id="submitBtn" [disabled]="!isFormValidValue" type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+      </div>
+
+    </form>
+  </div>
+</div>

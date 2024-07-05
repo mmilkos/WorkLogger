@@ -14,4 +14,5 @@ public interface IWorkLoggerRepository
     Task<bool> IsUserInDbAsync(string userName);
     Task AddUserAsync(User user);
     Task<User?> FindUserByUsernameAsync(string userName);
+    Task AddTeamAsync(Team team);
 }

@@ -37,19 +37,14 @@ export class HeaderComponent
       }
 
     this.accountService.login(dto).subscribe(
-      (response)=>
+      response =>
       {
         this.accountService.setToken(response.jwtToken);
         this.toastrService.success("Logged in", "Succes")
         this.router.navigateByUrl('/' + RoutesEnum.Teams)
         this.loginForm.reset();
       },
-      (error) => {
-        error.error.forEach((error: string) =>
-        {
-          this.toastrService.error(error, 'Error');
-        })
-      }
+      error => error.error.forEach((error: string) => this.toastrService.error(error, 'Error'))
     );
   }
   logOut()

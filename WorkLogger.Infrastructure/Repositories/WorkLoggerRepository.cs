@@ -56,6 +56,13 @@ public class WorkLoggerRepository : IWorkLoggerRepository
         return await DbContext.Users.FirstOrDefaultAsync(user => user.UserName == userName.ToLower());
     }
 
+    //Teams
+    public async Task AddTeamAsync(Team team)
+    {
+        await DbContext.Teams.AddAsync(team);
+        await DbContext.SaveChangesAsync();
+    }
+
     public async Task<IDbContextTransaction> BeginTransactionAsync()
     {
         return await DbContext.Database.BeginTransactionAsync();

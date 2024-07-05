@@ -13,7 +13,7 @@ public class CompanyController(IMediator mediator) : ControllerBase
     private IMediator _mediator = mediator;
 
     [HttpPost("register")]
-    public async Task<ActionResult<CompanyIdAndNameDto>> RegisterCompanyWithCeo(RegisterCompanyDto dto)
+    public async Task<ActionResult<CompanyIdAndNameDto>> RegisterCompanyWithCeo( RegisterCompanyDto dto)
     {
    
         var result = await _mediator.Send(new RegisterCompanyWithCeoCommand(dto));

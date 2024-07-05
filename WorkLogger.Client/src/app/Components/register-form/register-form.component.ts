@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators, AbstractControl} from '@angular/forms';
-import { CompanyService } from '../../Services/company.service';
+import { CompanyService } from '../../services/company.service';
 import { RegisterCompanyDto } from '../../DTOs/registerCompanyDto';
 import { ToastrService } from "ngx-toastr";
 import {error} from "@angular/compiler-cli/src/transformers/util";
@@ -34,8 +34,6 @@ export class RegisterFormComponent implements OnInit
     this.registerForm.statusChanges.subscribe(status => {
       if (status == 'VALID') this.isFormValidValue = true;
       else this.isFormValidValue = false;
-
-      console.log(status)
     });
   }
 
@@ -67,15 +65,9 @@ export class RegisterFormComponent implements OnInit
       };
 
     this.companyService.registerCompanyWithCeo(dto).subscribe(
-      () => {
-        this.toastrService.success('Registered corectly', 'Succes');
-      },
-      (error) => {
-        error.error.forEach((error: string) =>
-        {
-          this.toastrService.error(error, 'Error');
-        })
-      }
+      () => this.toastrService.success('Registered corectly', 'Succes'),
+
+      error => error.error.forEach((error: string) => this.toastrService.error(error, 'Error'))
     );
   }
 }

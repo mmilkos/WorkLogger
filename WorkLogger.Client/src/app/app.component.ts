@@ -18,7 +18,9 @@ export class AppComponent {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) =>
     {
-      this.isCenter = event.urlAfterRedirects != '/' + RoutesEnum.Teams
+      let teamsPath = '/' + RoutesEnum.Teams;
+
+    //  this.isCenter = !event.urlAfterRedirects.startsWith(teamsPath)
     })
   }
 

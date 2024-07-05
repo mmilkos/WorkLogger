@@ -6,19 +6,19 @@
   <hr>
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
-      <a href="#" class="nav-link active" aria-current="page">
+      <a href="#" class="nav-link text-secondary" aria-current="page" routerLinkActive="text-white">
         <svg class="bi me-2" width="16" height="16"></svg>
         Add manager
       </a>
     </li>
     <li>
-      <a routerLink="" href="#" class="nav-link text-white">
+      <a routerLink="{{routesEnum.Create}}" href="#" class="nav-link text-secondary" routerLinkActive="text-white" [routerLinkActiveOptions]="{exact: false}">
         <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
         Create team
       </a>
     </li>
     <li>
-      <a href="#" class="nav-link text-white">
+      <a href="#" class="nav-link text-secondary" routerLinkActive="text-white">
         <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
         Show teams
       </a>

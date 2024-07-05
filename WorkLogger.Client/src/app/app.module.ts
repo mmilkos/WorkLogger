@@ -15,6 +15,7 @@ import { AboutComponent } from './Components/about/about.component';
 import { TeamsComponent } from './Components/teams/teams.component';
 import { SideBarComponent } from './Components/side-bar/side-bar.component';
 import { AddUserFormComponent } from './Components/add-user-form/add-user-form.component';
+import { AddTeamFormComponent } from './Components/add-team-form/add-team-form.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { AddUserFormComponent } from './Components/add-user-form/add-user-form.c
     AboutComponent,
     TeamsComponent,
     SideBarComponent,
-    AddUserFormComponent
+    AddUserFormComponent,
+    AddTeamFormComponent
   ],
   imports: [
     BrowserModule,
