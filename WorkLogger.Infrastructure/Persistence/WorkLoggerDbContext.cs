@@ -8,6 +8,7 @@ public class WorkLoggerDbContext(DbContextOptions<WorkLoggerDbContext> options) 
     public DbSet<UserTask> UserTasks { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Company> Companies { get; set; }
+    public DbSet<Team> Teams { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,6 +26,10 @@ public class WorkLoggerDbContext(DbContextOptions<WorkLoggerDbContext> options) 
             entity.Property(e => e.UserName).HasMaxLength(255);
             entity.Property(e => e.PasswordHash).HasMaxLength(64);
             entity.Property(e => e.PasswordSalt).HasMaxLength(16);
+            
+            entity.HasOne<Team>()
+                .WithMany(p => p.TeamMembers)
+                .HasForeignKey(e => e.TeamId);
         });
 
         modelBuilder.Entity<UserTask>(entity =>
@@ -33,8 +38,7 @@ public class WorkLoggerDbContext(DbContextOptions<WorkLoggerDbContext> options) 
             entity.Property(e => e.Name).HasMaxLength(255);
             entity.Property(e => e.Description).HasColumnType("TEXT");
             entity.Property(e => e.LoggedHours).HasColumnType("FLOAT");
-
-            // One-to-many relationships with User
+            
             entity.HasOne<User>()
                 .WithMany()
                 .HasForeignKey(ut => ut.AssignedUserId);
@@ -42,6 +46,17 @@ public class WorkLoggerDbContext(DbContextOptions<WorkLoggerDbContext> options) 
             entity.HasOne<User>()
                 .WithMany()
                 .HasForeignKey(ut => ut.AuthorId);
+        });
+        
+        modelBuilder.Entity<Team>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.CompanyId);
+            entity.HasOne<Company>()
+                .WithMany()
+                .HasForeignKey(e => e.CompanyId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 };

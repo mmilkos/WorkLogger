@@ -60,7 +60,7 @@ namespace WorkLogger.Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Company with this ID does not exist&quot;.
+        ///   Looks up a localized string similar to Company with this ID does not exist.
         /// </summary>
         public static string CompanyDoesNotExist {
             get {
@@ -69,7 +69,7 @@ namespace WorkLogger.Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Incorrect username or password&quot;.
+        ///   Looks up a localized string similar to Incorrect username or password.
         /// </summary>
         public static string InvalidCredentials {
             get {
@@ -78,7 +78,7 @@ namespace WorkLogger.Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Role does not exist&quot;.
+        ///   Looks up a localized string similar to Role does not exist.
         /// </summary>
         public static string RoleDoesNotExist {
             get {
@@ -87,7 +87,7 @@ namespace WorkLogger.Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;User with this username already exist&quot;.
+        ///   Looks up a localized string similar to User with this username already exist.
         /// </summary>
         public static string UserAlreadyExist {
             get {

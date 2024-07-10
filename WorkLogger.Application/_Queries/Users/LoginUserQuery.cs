@@ -4,13 +4,13 @@ using WorkLogger.Domain.DTOs;
 
 namespace WorkLogger.Application._Queries.Users;
 
-public class LoginUserQuery : IRequest<OperationResult<UserDto>>
+public class LoginUserQuery : IRequest<OperationResult<UserResponseDto>>
 {
-    public LoginUserDto Dto { get; }
+    public LoginUserRequestDto RequestDto { get; }
     
-    public LoginUserQuery(LoginUserDto loginDto)
+    public LoginUserQuery(LoginUserRequestDto loginRequestDto)
     {
-        Dto = loginDto;
+        RequestDto = loginRequestDto;
     }
     
 }

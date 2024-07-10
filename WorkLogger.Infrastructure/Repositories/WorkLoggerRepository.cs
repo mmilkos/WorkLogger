@@ -15,45 +15,45 @@ public class WorkLoggerRepository : IWorkLoggerRepository
         DbContext = dbContext;
     }
     
-    //Companies
-    public async Task AddCompanyAsync(Company company)
-    {
-         await DbContext.Companies.AddAsync(company);
-         await DbContext.SaveChangesAsync();
-    }
-
-    public async Task<Company?> FindCompanyByIdAsync(int id)
-    {
-        return await DbContext.Companies.FindAsync(id);
-    }
-
-    public async Task UpdateCompanyAsync(Company company)
-    {
-        DbContext.Companies.Update(company);
-        await DbContext.SaveChangesAsync();
-    }
-    
-    public async Task<List<Company>> GetAllCompaniesAsync()
-    {
-        var companies = await DbContext.Companies.ToListAsync();
-        return companies;
-    }
-    
     //Users
     public async Task<bool> IsUserInDbAsync(string userName)
     {
         return await DbContext.Users.AnyAsync(user => user.UserName == userName.ToLower());
     }
 
-    public async Task AddUserAsync(User user)
-    {
-        await DbContext.Users.AddAsync(user);
-        await DbContext.SaveChangesAsync();
-    }
-
     public async Task<User?> FindUserByUsernameAsync(string userName)
     {
         return await DbContext.Users.FirstOrDefaultAsync(user => user.UserName == userName.ToLower());
+    }
+    
+    //Generic
+    public async Task<List<T>> GetEntitiesPaged<T>(int companyId, int page, int pageSize) where T : BaseEntity
+    {
+        var offset = (page - 1) * pageSize;
+        var pagedResult = await DbContext.Set<T>().Where(entity => entity.CompanyId == companyId)
+            .Skip(offset)
+            .Take(pageSize)
+            .ToListAsync();
+      
+        return pagedResult;
+    }
+
+    public async Task<int> GetEntitiesCount<T>(int companyId) where T : BaseEntity
+    {
+        var entities = DbContext.Set<T>().Where(entity => entity.CompanyId == companyId);
+
+        return await entities.CountAsync();
+    }
+
+    public async Task AddAsync<T>(T entity) where T: class 
+    {
+        await DbContext.Set<T>().AddAsync(entity);
+        await DbContext.SaveChangesAsync();
+    }
+
+    public async Task<T?> FindEntityByIdAsync<T>(int id) where T : class
+    {
+        return await DbContext.Set<T>().FindAsync(id);
     }
 
     public async Task<IDbContextTransaction> BeginTransactionAsync()

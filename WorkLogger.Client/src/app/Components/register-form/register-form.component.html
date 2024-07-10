@@ -1,0 +1,64 @@
+<div class="card mb-3" style="max-width: 30rem; margin: auto; top: 2rem; background-color: #242526">
+  <div class="card-body">
+    <form [formGroup]="registerForm">
+      <h2 class="card-title textColor">Company</h2>
+      <div class="mb-3">
+        <label for="companyName" class="form-label">Name</label>
+        <input type="text" class="form-control"
+               [class.is-invalid]="registerForm.controls['companyName'].invalid && registerForm.controls['companyName'].touched"
+               id="companyName" formControlName="companyName">
+
+        <div class="invalid-feedback" *ngIf="registerForm.controls['companyName'].invalid && registerForm.controls['companyName'].touched">
+          Company name is required
+        </div>
+      </div>
+
+      <h2 class="textColor">CEO</h2>
+      <div class="row">
+        <div class="col">
+          <div class="mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control"
+                   [class.is-invalid]="registerForm.controls['firstName'].invalid && registerForm.controls['firstName'].touched"
+                   id="firstName" formControlName="firstName">
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control"
+                   [class.is-invalid]="registerForm.controls['lastName'].invalid && registerForm.controls['lastName'].touched"
+                   id="lastName" formControlName="lastName">
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control"
+               [class.is-invalid]="registerForm.controls['username'].invalid && registerForm.controls['username'].touched" id="username" formControlName="username">
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control"
+              [class.is-invalid]="registerForm.controls['password'].invalid && registerForm.controls['password'].touched" id="password" formControlName="password">
+      </div>
+
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Repeat password</label>
+        <input type="password" class="form-control"
+               [class.is-invalid]="registerForm.hasError('mismatch') && registerForm.controls['confirmPassword'].touched"
+               id="confirmPassword" formControlName="confirmPassword">
+        <div class="invalid-feedback" *ngIf="registerForm.hasError('mismatch') && registerForm.controls['confirmPassword'].touched">
+          Passwords are not matching
+        </div>
+      </div>
+
+
+
+      <button [disabled]="!isFormValidValue" type="button" class="btn btn-primary" style="width: 100%" (click)="onSubmit()">Submit</button>
+    </form>
+  </div>
+</div>

@@ -26,7 +26,7 @@ public class BaseTests : IDisposable
         
         services.AddScoped<IWorkLoggerRepository, WorkLoggerRepository>();
         services.AddSingleton(_ => _dbContext);
-        services.AddMediatR(typeof(WorkLogger.Application._Commands.Companies.RegisterCompanyCommandHandler));
+        services.AddMediatR(typeof(WorkLogger.Application._Commands.Companies.RegisterCompanyWithCeoCommandHandler));
         services.AddMediatR(typeof(WorkLogger.Application._Commands.Users.RegisterUserCommandHandler));
         
         var provider = services.BuildServiceProvider();

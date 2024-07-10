@@ -19,15 +19,15 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="UserAlreadyExist" xml:space="preserve">
-        <value>"User with this username already exist"</value>
+        <value>User with this username already exist</value>
     </data>
     <data name="CompanyDoesNotExist" xml:space="preserve">
-        <value>"Company with this ID does not exist"</value>
+        <value>Company with this ID does not exist</value>
     </data>
     <data name="RoleDoesNotExist" xml:space="preserve">
-        <value>"Role does not exist"</value>
+        <value>Role does not exist</value>
     </data>
     <data name="InvalidCredentials" xml:space="preserve">
-        <value>"Incorrect username or password"</value>
+        <value>Incorrect username or password</value>
     </data>
 </root>

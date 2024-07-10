@@ -16,7 +16,7 @@ public static class ServiceCollectionExtension
         var jwtIssuer = authentication.GetValue<string>("JwtIssuer");
         var jwtKey = authentication.GetValue<string>("JwtKey");
 
-        services.AddMediatR(typeof(RegisterUserCommand));
+        services.AddMediatR(typeof(RegisterUserRequestCommand));
 
         services.AddAuthentication(oprion =>
         {

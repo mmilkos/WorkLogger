@@ -22,13 +22,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+const string origin = "http://localhost:4200";
+app.UseCors(options => options.AllowAnyMethod().AllowAnyHeader().WithOrigins(origin));
+
+
+/*app.UseHttpsRedirection();*/
+app.UseAuthentication();
 
 app.UseAuthorization();
 
+
+
 app.MapControllers();
 
-const string origin = "http://localhost:4200";
-app.UseCors(options => options.AllowAnyMethod().AllowAnyHeader().WithOrigins(origin));
 
 app.Run();

@@ -2,7 +2,7 @@
 
 namespace WorkLogger.Domain.DTOs;
 
-public class RegisterUserDto
+public class RegisterUserRequestDto
 {
     public int CompanyId { get; set; }
     public string Name { get; set; }

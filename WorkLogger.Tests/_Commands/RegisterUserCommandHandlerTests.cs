@@ -20,9 +20,9 @@ public class RegisterUserCommandHandlerTests : BaseTests
         //Arrange
         var repository  = new WorkLoggerRepository(_dbContext);
         
-        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany");
+        var company = await CompanyObjectMother.CreateAsync(_dbContext, "testCompany");
         
-        var request = new RegisterUserDto()
+        var request = new RegisterUserRequestDto()
         {
             CompanyId = company.Id,
             Name = "John",
@@ -33,7 +33,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         };
         
         //Act
-        var command = new RegisterUserCommand(request);
+        var command = new RegisterUserRequestCommand(request);
 
         var handler = new RegisterUserCommandHandler(repository);
 
@@ -57,9 +57,9 @@ public class RegisterUserCommandHandlerTests : BaseTests
         //Arrange
         var repository  = new WorkLoggerRepository(_dbContext);
         
-        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany");
+        var company = await CompanyObjectMother.CreateAsync(_dbContext, "testCompany");
         
-        var request = new RegisterUserDto()
+        var request = new RegisterUserRequestDto()
         {
             CompanyId = company.Id,
             Name = "John",
@@ -70,7 +70,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         };
         
         //Act
-        var command = new RegisterUserCommand(request);
+        var command = new RegisterUserRequestCommand(request);
 
         var handler = new RegisterUserCommandHandler(repository);
 
@@ -91,9 +91,9 @@ public class RegisterUserCommandHandlerTests : BaseTests
         //Arrange
         var repository  = new WorkLoggerRepository(_dbContext);
         
-        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany");
+        var company = await CompanyObjectMother.CreateAsync(_dbContext, "testCompany");
         
-        var request = new RegisterUserDto()
+        var request = new RegisterUserRequestDto()
         {
             CompanyId = company.Id,
             Name = "John",
@@ -104,7 +104,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         };
         
         //Act
-        var command = new RegisterUserCommand(request);
+        var command = new RegisterUserRequestCommand(request);
 
         var handler = new RegisterUserCommandHandler(repository);
 
@@ -116,6 +116,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
 
         //Assert
         result.Success.Should().BeTrue();
+        result.ErrorsList.Should().Equal(new List<string>() { });
         user.Should().NotBeNull();
         user.CompanyId.Should().Be(request.CompanyId);
     }
@@ -126,11 +127,11 @@ public class RegisterUserCommandHandlerTests : BaseTests
         //Arrange
         var repository  = new WorkLoggerRepository(_dbContext);
         
-        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany");
+        var company = await CompanyObjectMother.CreateAsync(_dbContext, "testCompany");
 
-        var user = await UserObjectMother.CreateAsync(repository: repository, companyId: company.Id);
+        var user = await UserObjectMother.CreateAsync(dbContext: _dbContext, companyId: company.Id);
         
-        var request = new RegisterUserDto()
+        var request = new RegisterUserRequestDto()
         {
             CompanyId = user.CompanyId,
             Name = user.Name,
@@ -141,7 +142,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         };
         
         //Act
-        var command = new RegisterUserCommand(request);
+        var command = new RegisterUserRequestCommand(request);
 
         var handler = new RegisterUserCommandHandler(repository);
 
@@ -160,7 +161,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         //Arrange
         var repository  = new WorkLoggerRepository(_dbContext);
         
-        var request = new RegisterUserDto()
+        var request = new RegisterUserRequestDto()
         {
             CompanyId = -1,
             Name = "John",
@@ -171,7 +172,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         };
         
         //Act
-        var command = new RegisterUserCommand(request);
+        var command = new RegisterUserRequestCommand(request);
 
         var handler = new RegisterUserCommandHandler(repository);
 
@@ -189,9 +190,9 @@ public class RegisterUserCommandHandlerTests : BaseTests
         //Arrange
         var repository  = new WorkLoggerRepository(_dbContext);
         
-        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany");
+        var company = await CompanyObjectMother.CreateAsync(_dbContext, "testCompany");
         
-        var request = new RegisterUserDto()
+        var request = new RegisterUserRequestDto()
         {
             CompanyId = company.Id,
             Name = "John",
@@ -202,7 +203,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         };
         
         //Act
-        var command = new RegisterUserCommand(request);
+        var command = new RegisterUserRequestCommand(request);
 
         var handler = new RegisterUserCommandHandler(repository);
 

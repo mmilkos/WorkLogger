@@ -13,12 +13,12 @@ public class CompanyController(IMediator mediator) : ControllerBase
     private IMediator _mediator = mediator;
 
     [HttpPost("register")]
-    public async Task<ActionResult> RegisterOrganization(RegisterCompanyDto dto)
+    public async Task<ActionResult<CompanyIdAndNameResponseDto>> RegisterCompanyWithCeo( RegisterCompanyRequestDto requestDto)
     {
    
-        var result = await _mediator.Send(new RegisterCompanyCommand(dto));
+        var result = await _mediator.Send(new RegisterCompanyWithCeoCommand(requestDto));
 
-        if (result.Success) return Created();
+        if (result.Success) return Created(string.Empty,result.Data);
 
         switch (result.ErrorType)
         {
