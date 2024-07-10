@@ -30,7 +30,7 @@ public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, OperationRe
         var dto = request.RequestDto;
         var operationResult = new OperationResult<UserResponseDto>();
         
-        var user = await _repository.FindUserByUsernameAsync(dto.UserName);
+        var user = await _repository.FindEntityByCondition<User>(user => user.UserName == dto.UserName);
         
         var correctCredentials = CheckCredentials(user, dto);
         

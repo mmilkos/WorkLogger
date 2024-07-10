@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators, AbstractControl} from '@angular/forms';
-import { CompanyService } from '../../services/company.service';
-import { RegisterCompanyDto } from '../../DTOs/registerCompanyDto';
 import { ToastrService } from "ngx-toastr";
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import { RegisterCompanyDto } from '../../../DTOs/registerCompanyDto';
+import { CompanyService } from '../../../services/company.service';
 
 @Component({
   selector: 'app-register-form',

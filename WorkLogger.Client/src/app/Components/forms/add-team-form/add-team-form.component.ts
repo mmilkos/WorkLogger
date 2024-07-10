@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import { TeamService } from '../../services/team.service';
-import { CreateTeamDto } from '../../DTOs/createTeamDto';
+import { CreateTeamDto } from '../../../DTOs/createTeamDto';
+import { TeamService } from '../../../services/team.service';
 
 @Component({
   selector: 'app-add-team-form',
@@ -39,11 +39,12 @@ export class AddTeamFormComponent implements OnInit
       {
         name: this.addTeamForm.get('teamName')?.value || "",
       }
+
     this.teamService.createTeam(dto).subscribe(
       () =>
       {
-        this.toastrService.success("Added team", "Succes")
-
+        this.toastrService.success("Added team", "Succes");
+        this.addTeamForm.reset();
       },
       (error) => {
         this.toastrService.error(error.error, "Error");

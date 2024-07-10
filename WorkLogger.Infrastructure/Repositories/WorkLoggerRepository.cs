@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using WorkLogger.Domain.DTOs;
 using WorkLogger.Domain.Entities;
 using WorkLogger.Domain.Interfaces;
 using WorkLogger.Infrastructure.Persistence;
@@ -15,32 +17,21 @@ public class WorkLoggerRepository : IWorkLoggerRepository
         DbContext = dbContext;
     }
     
-    //Users
-    public async Task<bool> IsUserInDbAsync(string userName)
+    public async Task<List<T>> GetEntitiesPaged<T>(Expression<Func<T, bool>> condition, PagedRequestDto pagingParams) where T : class
     {
-        return await DbContext.Users.AnyAsync(user => user.UserName == userName.ToLower());
-    }
-
-    public async Task<User?> FindUserByUsernameAsync(string userName)
-    {
-        return await DbContext.Users.FirstOrDefaultAsync(user => user.UserName == userName.ToLower());
-    }
-    
-    //Generic
-    public async Task<List<T>> GetEntitiesPaged<T>(int companyId, int page, int pageSize) where T : BaseEntity
-    {
-        var offset = (page - 1) * pageSize;
-        var pagedResult = await DbContext.Set<T>().Where(entity => entity.CompanyId == companyId)
+        var offset = (pagingParams.Page - 1) * pagingParams.PageSize;
+        var pagedResult = await DbContext.Set<T>()
+            .Where(condition)
             .Skip(offset)
-            .Take(pageSize)
+            .Take(pagingParams.PageSize)
             .ToListAsync();
       
         return pagedResult;
     }
 
-    public async Task<int> GetEntitiesCount<T>(int companyId) where T : BaseEntity
+    public async Task<int> GetEntitiesCount<T>(Expression<Func<T, bool>> condition) where T : class
     {
-        var entities = DbContext.Set<T>().Where(entity => entity.CompanyId == companyId);
+        var entities = DbContext.Set<T>().Where(condition);
 
         return await entities.CountAsync();
     }
@@ -54,6 +45,11 @@ public class WorkLoggerRepository : IWorkLoggerRepository
     public async Task<T?> FindEntityByIdAsync<T>(int id) where T : class
     {
         return await DbContext.Set<T>().FindAsync(id);
+    }
+
+    public async Task<T?> FindEntityByCondition<T>(Expression<Func<T, bool>> condition) where T : class
+    {
+        return await DbContext.Set<T>().Where(condition).FirstOrDefaultAsync();
     }
 
     public async Task<IDbContextTransaction> BeginTransactionAsync()
