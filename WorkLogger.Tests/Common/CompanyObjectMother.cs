@@ -7,14 +7,12 @@ namespace WorkLogger.Tests.Common;
 
 public static class CompanyObjectMother
 {
-    public static async Task<Company> CreateAsync(IWorkLoggerRepository repository, string name)
+    public static async Task<Company> CreateAsync(WorkLoggerDbContext dbContext, string name)
     {
-        var company = new Company
-        {
-            Name = name, 
-        };
+        var company = new Company(name: name);
 
-        await repository.AddCompanyAsync(company);
+        await dbContext.Companies.AddAsync(company);
+        await dbContext.SaveChangesAsync();
         return company;
     }
 }

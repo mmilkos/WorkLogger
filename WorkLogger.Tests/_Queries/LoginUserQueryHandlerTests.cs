@@ -29,16 +29,17 @@ public class LoginUserQueryHandlerTests : BaseTests
     {
         var password = "test123";
         var repository = new WorkLoggerRepository(_dbContext);
-        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany");
-        var user = await UserObjectMother.CreateAsync(repository, 
+        var company = await CompanyObjectMother.CreateAsync(_dbContext, "testCompany");
+        var user = await UserObjectMother.CreateAsync(_dbContext, 
             company.Id,
+            null,
             "Robert",
             "Lewandowski",
             "Lewy", 
             Roles.Manager,
             password: password);
 
-        var loginDto = new LoginUserDto()
+        var loginDto = new LoginUserRequestDto()
         {
             UserName = user.UserName,
             Password = password
@@ -51,6 +52,7 @@ public class LoginUserQueryHandlerTests : BaseTests
 
         var result = await handler.Handle(Query, CancellationToken.None);
 
+        result.ErrorsList.Should().BeEmpty();
         result.Success.Should().BeTrue();
         result.Data.JwtToken.Should().NotBeNullOrEmpty();
 
@@ -61,16 +63,17 @@ public class LoginUserQueryHandlerTests : BaseTests
     {
         var password = "test123";
         var repository = new WorkLoggerRepository(_dbContext);
-        var company = await CompanyObjectMother.CreateAsync(repository, "testCompany");
-        var user = await UserObjectMother.CreateAsync(repository, 
+        var company = await CompanyObjectMother.CreateAsync(_dbContext, "testCompany");
+        var user = await UserObjectMother.CreateAsync(_dbContext, 
             company.Id,
+            null,
             "Robert",
             "Lewandowski",
             "Lewy", 
             Roles.Manager,
             password: password);
 
-        var loginDto = new LoginUserDto()
+        var loginDto = new LoginUserRequestDto()
         {
             UserName = user.UserName,
             Password = ""

@@ -9,20 +9,20 @@ using WorkLogger.Domain.Interfaces;
 
 namespace WorkLogger.Application._Commands.Users;
 
-public class RegisterUserCommandHandler(IWorkLoggerRepository repository) : IRequestHandler<RegisterUserCommand, OperationResult<Unit>>
+public class RegisterUserCommandHandler(IWorkLoggerRepository repository) : IRequestHandler<RegisterUserRequestCommand, OperationResult<Unit>>
 {
     private IWorkLoggerRepository _repository = repository;
 
-    public async Task<OperationResult<Unit>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<Unit>> Handle(RegisterUserRequestCommand request, CancellationToken cancellationToken)
     {
         var operationResult = new OperationResult<Unit>();
         
-        var dto = request.UserDto;
+        var dto = request.UserRequestDto;
         Roles roles;
        
 
         var userAlreadyExist = await _repository.IsUserInDbAsync(dto.UserName);
-        var company = await _repository.FindCompanyByIdAsync(dto.CompanyId);
+        var company = await _repository.FindEntityByIdAsync<Company>(dto.CompanyId);
         var isValidRole = Enum.IsDefined(typeof(Roles), dto.Roles);
 
         if (userAlreadyExist) operationResult.AddError(Errors.UserAlreadyExist);
@@ -43,21 +43,17 @@ public class RegisterUserCommandHandler(IWorkLoggerRepository repository) : IReq
 
         using ( var hmac = new HMACSHA512())
         {
-            user = new User()
-            {
-                CompanyId = dto.CompanyId,
-                Name = dto.Name,
-                Surname = dto.Surname,
-                UserName = dto.UserName.ToLower(),
-                Role = roles,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(dto.Password)),
-                PasswordSalt = hmac.Key
-            };
+            user = new User.Builder()
+                .WithCompanyInfo(companyId: dto.CompanyId, teamId: null, role: dto.Roles)
+                .WithUserCredentials(name: dto.Name, surname: dto.Surname, userName: dto.UserName)
+                .WithPassword(passwordHash: hmac.ComputeHash(Encoding.UTF8.GetBytes(dto.Password)),
+                    passwordSalt: hmac.Key)
+                .Build();
         }
         
         try
         {
-            await _repository.AddUserAsync(user); 
+            await _repository.AddAsync(user); 
         }
         catch (Exception e)
         {

@@ -10,8 +10,9 @@ namespace WorkLogger.Tests.Common;
 public static class UserObjectMother
 {
     public static async Task<User> CreateAsync(
-        IWorkLoggerRepository repository, 
+        WorkLoggerDbContext dbContext, 
         int companyId,
+        int? teamId = null,
         string name = "John", 
         string surname = "Doe", 
         string userName = "johndoe", 
@@ -22,19 +23,16 @@ public static class UserObjectMother
 
         using (var hmac = new HMACSHA512())
         {
-            user = new User()
-            {
-                CompanyId = companyId,
-                Name = name,
-                Surname = surname,
-                UserName = userName.ToLower(),
-                Role = roles,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password)),
-                PasswordSalt = hmac.Key
-            };
+            user = new User.Builder()
+                .WithCompanyInfo(companyId: companyId, teamId: null, role: roles)
+                .WithUserCredentials(name: name, surname: surname, userName: userName.ToLower())
+                .WithPassword(passwordHash: hmac.ComputeHash(Encoding.UTF8.GetBytes(password)),
+                    passwordSalt: hmac.Key)
+                .Build();
         }
 
-        await repository.AddUserAsync(user);
+        await dbContext.Users.AddAsync(user);
+        await dbContext.SaveChangesAsync();
         return user;
     }
 }

@@ -3,7 +3,7 @@ using WorkLogger.Domain.Enums;
 
 namespace WorkLogger.Domain.DTOs;
 
-public class RegisterCompanyDto
+public class RegisterCompanyRequestDto
 {
     public string CompanyName { get; set; }
     public string Name { get; set; }

@@ -20,17 +20,17 @@ public class CreateTeamCommandHandler : IRequestHandler<CreateTeamCommand,Operat
     {
         var result = new OperationResult<Unit>();
         
-        var dto = request.Dto;
+        var dto = request.RequestDto;
 
-        var team = new Team()
-        {
-            Name = dto.Name,
-            CompanyId = dto.CompanyId
-        };
+        var team = new Team(
+            name: dto.Name,
+            companyId: dto.CompanyId);
+
+        team.TeamMembers = new List<User>() { };
 
         try
         {
-            await _repository.AddTeamAsync(team);
+            await _repository.AddAsync(team);
             return result;
         }
         catch (Exception e)

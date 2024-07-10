@@ -14,7 +14,7 @@ using WorkLogger.Domain.Interfaces;
 
 namespace WorkLogger.Application._Queries.Users;
 
-public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, OperationResult<UserDto>>
+public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, OperationResult<UserResponseDto>>
 {
     private IWorkLoggerRepository _repository;
     private IConfiguration _configuration;
@@ -25,10 +25,10 @@ public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, OperationRe
         _configuration = configuration;
     }
     
-    public async Task<OperationResult<UserDto>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<UserResponseDto>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
     {
-        var dto = request.Dto;
-        var operationResult = new OperationResult<UserDto>();
+        var dto = request.RequestDto;
+        var operationResult = new OperationResult<UserResponseDto>();
         
         var user = await _repository.FindUserByUsernameAsync(dto.UserName);
         
@@ -43,7 +43,7 @@ public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, OperationRe
 
         var token = GenerateJwtToken(user);
 
-        var userDto = new UserDto()
+        var userDto = new UserResponseDto()
         {
             JwtToken = token
         };
@@ -53,12 +53,12 @@ public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, OperationRe
         return operationResult;
     }
 
-    private bool CheckCredentials(User? user, LoginUserDto loginDto)
+    private bool CheckCredentials(User? user, LoginUserRequestDto loginRequestDto)
     {
         if (user == null) return false;
         
         using var hmac = new HMACSHA512(user.PasswordSalt);
-        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginRequestDto.Password));
         
         for (int i = 0; i < computedHash.Length; i++)
         {

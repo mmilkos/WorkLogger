@@ -4,11 +4,11 @@ using WorkLogger.Domain.DTOs;
 
 namespace WorkLogger.Application._Commands.Companies;
 
-public class RegisterCompanyWithCeoCommand : IRequest<OperationResult<CompanyIdAndNameDto>>
+public class RegisterCompanyWithCeoCommand : IRequest<OperationResult<CompanyIdAndNameResponseDto>>
 {
-    public RegisterCompanyDto Dto;
-    public RegisterCompanyWithCeoCommand(RegisterCompanyDto dto)
+    public RegisterCompanyRequestDto RequestDto;
+    public RegisterCompanyWithCeoCommand(RegisterCompanyRequestDto requestDto)
     {
-        Dto = dto;
+        RequestDto = requestDto;
     }
 }

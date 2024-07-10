@@ -15,7 +15,7 @@ public class RegisterCompanyWithCeoCommandHandlerTests : BaseTests
     public async Task ValidRequest_ShouldAddCompanyToDb()
     {
         //Arrange
-        var request = new RegisterCompanyDto()
+        var request = new RegisterCompanyRequestDto()
         {
             CompanyName = "testCompany",
             Name = "Robert",
@@ -33,7 +33,7 @@ public class RegisterCompanyWithCeoCommandHandlerTests : BaseTests
         
         //Assert
         result.Success.Should().BeTrue();
-        result.ErrorsList.Count.Should().Be(0);
+        result.ErrorsList.Should().Equal(new List<string>() { });
         company.Should().NotBeNull();
         company.Name.Should().Be(request.CompanyName);
         ceo.Should().NotBeNull();

@@ -16,9 +16,9 @@ public class AccountController(IMediator mediator) : ControllerBase
     private IMediator _mediator = mediator;
     
     [HttpPost("register")]
-    public async Task<ActionResult> RegisterUser(RegisterUserDto registerDto)
+    public async Task<ActionResult> RegisterUser(RegisterUserRequestDto registerRequestDto)
     {
-        var result = await _mediator.Send(new RegisterUserCommand(registerDto));
+        var result = await _mediator.Send(new RegisterUserRequestCommand(registerRequestDto));
 
         if (result.Success) return Created();
         
@@ -30,9 +30,9 @@ public class AccountController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<UserDto>> LoginUser(LoginUserDto loginDto)
+    public async Task<ActionResult<UserResponseDto>> LoginUser(LoginUserRequestDto loginRequestDto)
     {
-        var result = await _mediator.Send(new LoginUserQuery(loginDto));
+        var result = await _mediator.Send(new LoginUserQuery(loginRequestDto));
 
         if (result.Success) return Ok(result.Data);
 

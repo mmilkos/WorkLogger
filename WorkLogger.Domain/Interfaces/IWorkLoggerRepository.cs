@@ -7,12 +7,11 @@ namespace WorkLogger.Domain.Interfaces;
 public interface IWorkLoggerRepository
 {
     Task<IDbContextTransaction> BeginTransactionAsync();
-    Task AddCompanyAsync(Company company);
-    Task<Company?> FindCompanyByIdAsync(int companyId);
-    Task UpdateCompanyAsync(Company company);
-    Task<List<Company>> GetAllCompaniesAsync();
     Task<bool> IsUserInDbAsync(string userName);
-    Task AddUserAsync(User user);
     Task<User?> FindUserByUsernameAsync(string userName);
-    Task AddTeamAsync(Team team);
+    Task<List<T>> GetEntitiesPaged<T>(int companyId, int page, int pageSize) where T: BaseEntity;
+    Task<int> GetEntitiesCount<T>(int companyId) where T: BaseEntity;
+    Task AddAsync<T>(T entity) where T : class;
+    Task<T?> FindEntityByIdAsync<T>(int id) where T : class;
+
 }

@@ -16,6 +16,11 @@ import { TeamsComponent } from './Components/teams/teams.component';
 import { SideBarComponent } from './Components/side-bar/side-bar.component';
 import { AddUserFormComponent } from './Components/add-user-form/add-user-form.component';
 import { AddTeamFormComponent } from './Components/add-team-form/add-team-form.component';
+import { TeamsListComponent } from './Components/teams-list/teams-list.component';
+import {PaginationModule} from "ngx-bootstrap/pagination";
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import {MatCheckbox} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -27,7 +32,8 @@ import { AddTeamFormComponent } from './Components/add-team-form/add-team-form.c
     TeamsComponent,
     SideBarComponent,
     AddUserFormComponent,
-    AddTeamFormComponent
+    AddTeamFormComponent,
+    TeamsListComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +44,11 @@ import { AddTeamFormComponent } from './Components/add-team-form/add-team-form.c
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({positionClass:'toast-top-right',
-      preventDuplicates: false, timeOut: 2500 })
+      preventDuplicates: false, timeOut: 2500 }),
+    PaginationModule.forRoot(),
+    MatPaginatorModule,
+    MatTableModule,
+    MatCheckbox
   ],
   providers: [
     provideAnimationsAsync()

@@ -7,7 +7,7 @@ using WorkLogger.Domain.Interfaces;
 
 namespace WorkLogger.Application._Commands.Companies;
 
-public class RegisterCompanyWithCeoCommandHandler : IRequestHandler<RegisterCompanyWithCeoCommand, OperationResult<CompanyIdAndNameDto>>
+public class RegisterCompanyWithCeoCommandHandler : IRequestHandler<RegisterCompanyWithCeoCommand, OperationResult<CompanyIdAndNameResponseDto>>
 {
     private IWorkLoggerRepository _repository;
     private IMediator _mediator;
@@ -16,19 +16,18 @@ public class RegisterCompanyWithCeoCommandHandler : IRequestHandler<RegisterComp
         _repository = repository;
         _mediator = mediator;
     }
-    public async Task<OperationResult<CompanyIdAndNameDto>> Handle(RegisterCompanyWithCeoCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<CompanyIdAndNameResponseDto>> Handle(RegisterCompanyWithCeoCommand request, CancellationToken cancellationToken)
     {
-        var result = new OperationResult<CompanyIdAndNameDto>();
+        var result = new OperationResult<CompanyIdAndNameResponseDto>();
         
-        var dto = request.Dto;
+        var dto = request.RequestDto;
 
-        var company = new Company();
-        company.Name = dto.CompanyName;
+        var company = new Company(name: dto.CompanyName);
         
         try
         {
-            await _repository.AddCompanyAsync(company);
-            result.Data = new CompanyIdAndNameDto()
+            await _repository.AddAsync(company);
+            result.Data = new CompanyIdAndNameResponseDto()
             {
                 Id = company.Id,
                 Name = company.Name
@@ -41,7 +40,7 @@ public class RegisterCompanyWithCeoCommandHandler : IRequestHandler<RegisterComp
             return result;
         }
 
-        var ceoDto = new RegisterUserDto()
+        var ceoDto = new RegisterUserRequestDto()
         {
             CompanyId = company.Id,
             Name = dto.Name,
@@ -51,7 +50,7 @@ public class RegisterCompanyWithCeoCommandHandler : IRequestHandler<RegisterComp
             Password = dto.Password
         };
 
-        var userResult = await _mediator.Send(new RegisterUserCommand(ceoDto), cancellationToken);
+        var userResult = await _mediator.Send(new RegisterUserRequestCommand(ceoDto), cancellationToken);
 
         foreach (var error in userResult.ErrorsList)
         {

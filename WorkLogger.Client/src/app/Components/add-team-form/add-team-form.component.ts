@@ -47,9 +47,6 @@ export class AddTeamFormComponent implements OnInit
       },
       (error) => {
         this.toastrService.error(error.error, "Error");
-      }
-
-
-      )
+      })
   }
 }

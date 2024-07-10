@@ -6,10 +6,10 @@ namespace WorkLogger.Application._Commands.Teams;
 
 public class CreateTeamCommand : IRequest<OperationResult<Unit>>
 {
-    public CreateTeamDto Dto;
+    public CreateTeamRequestDto RequestDto;
     
-    public CreateTeamCommand(CreateTeamDto dto)
+    public CreateTeamCommand(CreateTeamRequestDto requestDto)
     {
-        Dto = dto;
+        RequestDto = requestDto;
     }
 }
