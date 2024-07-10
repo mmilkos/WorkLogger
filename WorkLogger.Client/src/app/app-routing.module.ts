@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegisterFormComponent } from './Components/register-form/register-form.component';
-import { AboutComponent } from './Components/about/about.component';
+import { AddTeamFormComponent } from './Components/forms/add-team-form/add-team-form.component';
+import { RegisterFormComponent } from './Components/forms/register-form/register-form.component';
+import { AboutComponent } from './Components/Pages/about/about.component';
+import { TeamsComponent } from './Components/Pages/teams/teams.component';
 import { RoutesEnum } from './enums/RoutesEnum';
-import { TeamsComponent } from './Components/teams/teams.component';
-import { AddTeamFormComponent } from './Components/add-team-form/add-team-form.component';
+
 
 const routes: Routes =
   [

@@ -21,11 +21,11 @@ public class RegisterUserCommandHandler(IWorkLoggerRepository repository) : IReq
         Roles roles;
        
 
-        var userAlreadyExist = await _repository.IsUserInDbAsync(dto.UserName);
+        var userInDb = await _repository.FindEntityByCondition<User>(user => user.UserName == dto.UserName);
         var company = await _repository.FindEntityByIdAsync<Company>(dto.CompanyId);
         var isValidRole = Enum.IsDefined(typeof(Roles), dto.Roles);
 
-        if (userAlreadyExist) operationResult.AddError(Errors.UserAlreadyExist);
+        if (userInDb != null) operationResult.AddError(Errors.UserAlreadyExist);
         if (company == null) operationResult.AddError(Errors.CompanyDoesNotExist);
         if (isValidRole == false) operationResult.AddError(Errors.RoleDoesNotExist);
 

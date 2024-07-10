@@ -27,11 +27,10 @@ public class GetAllTeamsPagedQueryHandler : IRequestHandler<GetAllTeamsPagedQuer
         
         try
         {
-             count = await _repository.GetEntitiesCount<Team>(dto.CompanyId);
+             count = await _repository.GetEntitiesCount<Team>(team => team.CompanyId == dto.CompanyId);
              teamsPaged = await _repository.GetEntitiesPaged<Team>(
-                 companyId: dto.CompanyId, 
-                 page: dto.Page,
-                 pageSize: dto.PageSize);
+                 condition: team => team.CompanyId == dto.CompanyId, 
+                 pagingParams: dto);
         }
         catch (Exception e)
         {
