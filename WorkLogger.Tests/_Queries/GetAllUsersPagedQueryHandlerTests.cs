@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using WorkLogger.Application._Queries.Teams;
+using WorkLogger.Application._Queries.Users;
 using WorkLogger.Domain.DTOs;
 using WorkLogger.Domain.Entities;
 using WorkLogger.Infrastructure.Repositories;
@@ -7,7 +7,7 @@ using WorkLogger.Tests.Common;
 
 namespace WorkLogger.Tests._Queries;
 
-public class GetAllTeamsPagedQueryHandlerTests : BaseTests
+public class GetAllUsersPagedQueryHandlerTests : BaseTests
 {
     [Theory]
     [InlineData(2, 5)]
@@ -16,12 +16,12 @@ public class GetAllTeamsPagedQueryHandlerTests : BaseTests
         // Arrange
         var repository = new WorkLoggerRepository(_dbContext);
         var company = await CompanyObjectMother.CreateAsync(dbContext: _dbContext, name: "Test Company" );
-        var teams = new List<Team>();
+        var users = new List<User>();
         
         for (int i = 0; i < 10; i++)
         {
-           var team = await TeamObjectMother.CreateAsync(dbContext: _dbContext, companyId: company.Id, name: $"test team {i}");
-           teams.Add(team);
+            var team = await UserObjectMother.CreateAsync(dbContext:_dbContext, companyId: company.Id, name:$"John{i}");
+            users.Add(team);
         }
         
         var dto = new PagedRequestDto()
@@ -30,8 +30,8 @@ public class GetAllTeamsPagedQueryHandlerTests : BaseTests
             PageSize = pageSize,
             CompanyId = company.Id
         };
-        var query = new GetAllTeamsPagedQuery(dto);
-        var handler = new GetAllTeamsPagedQueryHandler(repository);
+        var query = new GetAllUsersPagedQuery(dto);
+        var handler = new GetAllUsersPagedQueryHandler(repository);
 
         // Act
         var result = await handler.Handle(query, CancellationToken.None);
@@ -39,9 +39,9 @@ public class GetAllTeamsPagedQueryHandlerTests : BaseTests
         // Assert
         result.ErrorsList.Should().BeEmpty();
         result.Success.Should().BeTrue();
-        result.Data.TotalRecords.Should().Be(teams.Count);
+        result.Data.TotalRecords.Should().Be(users.Count);
         result.Data.Data.Count.Should().Be(dto.PageSize);
 
-        if (page == 2) result.Data.Data[0].Name.Should().Be(teams[5].Name);
+        if (page == 2) result.Data.Data[0].Name.Should().Be(users[5].Name);
     }
 }

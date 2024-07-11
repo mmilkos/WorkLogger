@@ -17,7 +17,7 @@ public class WorkLoggerRepository : IWorkLoggerRepository
         DbContext = dbContext;
     }
     
-    public async Task<List<T>> GetEntitiesPaged<T>(Expression<Func<T, bool>> condition, PagedRequestDto pagingParams) where T : class
+    public async Task<List<T>> GetEntitiesPagedAsync<T>(Expression<Func<T, bool>> condition, PagedRequestDto pagingParams) where T : class
     {
         var offset = (pagingParams.Page - 1) * pagingParams.PageSize;
         var pagedResult = await DbContext.Set<T>()
@@ -29,7 +29,7 @@ public class WorkLoggerRepository : IWorkLoggerRepository
         return pagedResult;
     }
 
-    public async Task<int> GetEntitiesCount<T>(Expression<Func<T, bool>> condition) where T : class
+    public async Task<int> GetEntitiesCountAsync<T>(Expression<Func<T, bool>> condition) where T : class
     {
         var entities = DbContext.Set<T>().Where(condition);
 
@@ -47,7 +47,7 @@ public class WorkLoggerRepository : IWorkLoggerRepository
         return await DbContext.Set<T>().FindAsync(id);
     }
 
-    public async Task<T?> FindEntityByCondition<T>(Expression<Func<T, bool>> condition) where T : class
+    public async Task<T?> FindEntityByConditionAsync<T>(Expression<Func<T, bool>> condition) where T : class
     {
         return await DbContext.Set<T>().Where(condition).FirstOrDefaultAsync();
     }

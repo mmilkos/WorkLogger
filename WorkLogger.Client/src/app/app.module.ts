@@ -21,6 +21,9 @@ import { SideBarComponent } from './Components/side-bar/side-bar.component';
 import { AddUserFormComponent } from './Components/forms/add-user-form/add-user-form.component';
 import { AddTeamFormComponent } from './Components/forms/add-team-form/add-team-form.component';
 import { TeamsListComponent } from './Components/Lists/teams-list/teams-list.component';
+import { UsersComponent } from './Components/Pages/users/users.component';
+import { UsersListComponent } from './Components/Lists/users-list/users-list.component';
+
 
 
 @NgModule({
@@ -34,6 +37,8 @@ import { TeamsListComponent } from './Components/Lists/teams-list/teams-list.com
     AddUserFormComponent,
     AddTeamFormComponent,
     TeamsListComponent,
+    UsersComponent,
+    UsersListComponent,
   ],
   imports: [
     BrowserModule,

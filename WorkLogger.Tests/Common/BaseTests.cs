@@ -10,7 +10,7 @@ namespace WorkLogger.Tests.Common;
 
 public class BaseTests : IDisposable
 {
-    protected readonly WorkLoggerDbContext _dbContext;
+    protected WorkLoggerDbContext _dbContext;
     protected readonly IMediator _mediator;
     private IDbContextTransaction _transaction;
     

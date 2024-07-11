@@ -14,7 +14,7 @@ using WorkLogger.Domain.Interfaces;
 
 namespace WorkLogger.Application._Queries.Users;
 
-public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, OperationResult<UserResponseDto>>
+public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, OperationResult<UserLoginResponseDto>>
 {
     private IWorkLoggerRepository _repository;
     private IConfiguration _configuration;
@@ -25,12 +25,12 @@ public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, OperationRe
         _configuration = configuration;
     }
     
-    public async Task<OperationResult<UserResponseDto>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult<UserLoginResponseDto>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
     {
         var dto = request.RequestDto;
-        var operationResult = new OperationResult<UserResponseDto>();
+        var operationResult = new OperationResult<UserLoginResponseDto>();
         
-        var user = await _repository.FindEntityByCondition<User>(user => user.UserName == dto.UserName);
+        var user = await _repository.FindEntityByConditionAsync<User>(user => user.UserName == dto.UserName);
         
         var correctCredentials = CheckCredentials(user, dto);
         
@@ -43,7 +43,7 @@ public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, OperationRe
 
         var token = GenerateJwtToken(user);
 
-        var userDto = new UserResponseDto()
+        var userDto = new UserLoginResponseDto()
         {
             JwtToken = token
         };

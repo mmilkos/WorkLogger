@@ -30,4 +30,7 @@
     <data name="InvalidCredentials" xml:space="preserve">
         <value>Incorrect username or password</value>
     </data>
+    <data name="ShortPassword" xml:space="preserve">
+        <value>Password is too short</value>
+    </data>
 </root>

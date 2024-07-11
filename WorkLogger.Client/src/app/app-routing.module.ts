@@ -5,18 +5,17 @@ import { RegisterFormComponent } from './Components/forms/register-form/register
 import { AboutComponent } from './Components/Pages/about/about.component';
 import { TeamsComponent } from './Components/Pages/teams/teams.component';
 import { RoutesEnum } from './enums/RoutesEnum';
+import { UsersComponent } from './Components/Pages/users/users.component';
 
 
 const routes: Routes =
   [
     {path: RoutesEnum.Register, component: RegisterFormComponent },
     {path: RoutesEnum.About, component: AboutComponent },
-    {path: RoutesEnum.Teams, component: TeamsComponent,
-    children:
-      [
-        {path: RoutesEnum.Create, component: AddTeamFormComponent}
-      ] },
+    {path: RoutesEnum.Teams, component: TeamsComponent},
+    {path: RoutesEnum.Users, component: UsersComponent},
     {path: '**', component: AboutComponent, pathMatch: 'full' },
+
   ];
 
 @NgModule({

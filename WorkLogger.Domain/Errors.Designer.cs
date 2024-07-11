@@ -87,6 +87,15 @@ namespace WorkLogger.Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password is too short.
+        /// </summary>
+        public static string ShortPassword {
+            get {
+                return ResourceManager.GetString("ShortPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User with this username already exist.
         /// </summary>
         public static string UserAlreadyExist {

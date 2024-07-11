@@ -27,8 +27,8 @@ public class GetAllTeamsPagedQueryHandler : IRequestHandler<GetAllTeamsPagedQuer
         
         try
         {
-             count = await _repository.GetEntitiesCount<Team>(team => team.CompanyId == dto.CompanyId);
-             teamsPaged = await _repository.GetEntitiesPaged<Team>(
+             count = await _repository.GetEntitiesCountAsync<Team>(team => team.CompanyId == dto.CompanyId);
+             teamsPaged = await _repository.GetEntitiesPagedAsync<Team>(
                  condition: team => team.CompanyId == dto.CompanyId, 
                  pagingParams: dto);
         }

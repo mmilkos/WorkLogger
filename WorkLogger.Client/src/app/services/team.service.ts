@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {CreateTeamDto} from '../DTOs/createTeamDto';
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import { AccountService } from './account.service';
 import { PagedResultModel } from '../models/pagedResult.model';
 import { Team } from '../models/team.model';
@@ -27,14 +27,5 @@ export class TeamService {
         headers: header,
         params: params
       })
-  }
-
-  getParams(pageSize: number, pageNumber : number ): HttpParams
-  {
-    let params = new HttpParams()
-      .set('page', pageNumber)
-      .set('pageSize', pageSize)
-
-    return params;
   }
 }

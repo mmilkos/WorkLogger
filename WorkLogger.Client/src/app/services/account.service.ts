@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import { LoginUserDto } from '../DTOs/loginDto.model';
 import * as jwt_decoder from 'jwt-decode';
 import {LoggedUser} from '../models/loggedUser.model';
+import { RegisterUserDto } from '../DTOs/RegisterUserDto';
 @Injectable({
   providedIn: 'root'
 })
@@ -46,5 +47,10 @@ export class AccountService {
   {
     var token = sessionStorage.getItem('token')
     return new HttpHeaders().set('Authorization', 'Bearer ' + token)
+  }
+
+  registerUser(dto : RegisterUserDto): Observable<any>
+  {
+    return this.http.post(this.apiUrl + "register", dto, { headers: this.getHeader() });
   }
 }

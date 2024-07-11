@@ -16,3 +16,9 @@ th
 .full-width-table tr {
   display: flex;
 }
+
+mat-header-cell
+{
+  background-color: #242526;
+  color: white
+}

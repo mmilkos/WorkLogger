@@ -9,6 +9,7 @@
           <li *ngIf="!isLoggedIn"><a routerLink="{{routesEnum.Register}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">Register</a></li>
           <li><a routerLink="{{routesEnum.About}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">About</a></li>
           <li *ngIf="isLoggedIn"><a routerLink="{{routesEnum.Teams}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">Teams</a></li>
+          <li *ngIf="isLoggedIn"><a routerLink="{{routesEnum.Users}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">Users</a></li>
         </ul>
 
         <form *ngIf="!isLoggedIn" [formGroup]="loginForm" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex">
