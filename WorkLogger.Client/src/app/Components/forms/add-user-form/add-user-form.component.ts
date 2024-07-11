@@ -5,6 +5,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { AccountService } from '../../../services/account.service';
 import {RegisterUserDto} from "../../../DTOs/RegisterUserDto";
 import {Subscription} from "rxjs";
+import { CommonService } from '../../../services/common.service';
 
 @Component({
   selector: 'app-add-user-form',
@@ -15,8 +16,8 @@ export class AddUserFormComponent implements OnInit, OnDestroy
 {
   isFormValidValue = false;
   private statusSubscription?: Subscription;
-  constructor(private teamService: TeamService,
-              private accountService: AccountService,
+  constructor(private accountService: AccountService,
+              private commonService: CommonService,
               private toastrService : ToastrService) {}
 
   ngOnInit(): void
@@ -29,7 +30,7 @@ export class AddUserFormComponent implements OnInit, OnDestroy
       name: new FormControl('', Validators.required),
       surname: new FormControl('', Validators.required),
       username: new FormControl('', Validators.required),
-      role: new FormControl('', Validators.required),
+      role: new FormControl(0, Validators.required),
       password: new FormControl('', Validators.required),
     })
 
@@ -49,7 +50,7 @@ export class AddUserFormComponent implements OnInit, OnDestroy
         name: this.addUserForm.controls.name.value || "",
         surname: this.addUserForm.controls.surname.value || "",
         username: this.addUserForm.controls.username.value || "",
-        role: this.addUserForm.controls.role.value || "",
+        role: this.addUserForm.controls.role.value || 0,
         password: this.addUserForm.controls.password.value || "",
       }
 
@@ -57,6 +58,7 @@ export class AddUserFormComponent implements OnInit, OnDestroy
       () => {
         this.toastrService.success('User added successfully', "Succes");
         this.addUserForm.reset();
+        this.commonService.refresh();
         },
       (error) => error.error.forEach((error: string) => this.toastrService.error(error, 'Error')))
   }

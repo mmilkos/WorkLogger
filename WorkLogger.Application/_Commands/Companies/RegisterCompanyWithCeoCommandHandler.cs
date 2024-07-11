@@ -46,7 +46,7 @@ public class RegisterCompanyWithCeoCommandHandler : IRequestHandler<RegisterComp
             Name = dto.Name,
             Surname = dto.Surname,
             UserName = dto.UserName,
-            Roles = Roles.CEO,
+            Role = (int)Roles.CEO,
             Password = dto.Password
         };
 

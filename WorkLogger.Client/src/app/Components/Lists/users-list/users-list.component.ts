@@ -1,21 +1,23 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import { User } from '../../../models/User.model';
 import {MatPaginator} from "@angular/material/paginator";
 import { UserService } from '../../../services/user.service';
 import {HttpParams} from "@angular/common/http";
 import { CommonService } from '../../../services/common.service';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.css'
 })
-export class UsersListComponent implements OnInit, AfterViewInit
+export class UsersListComponent implements OnInit, AfterViewInit, OnDestroy
 {
   displayedColumns: string[] = ['name', 'surrname', 'team','role', 'details'];
   datasource: MatTableDataSource<User> = new MatTableDataSource()
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  private refreshSubscription?: Subscription;
 
   totalRecords: number | undefined;
   pageSize: number | undefined;
@@ -24,10 +26,14 @@ export class UsersListComponent implements OnInit, AfterViewInit
   constructor(private usersService: UserService,
               private commonService: CommonService) {}
 
+
+
   ngOnInit(): void
   {
     this.datasource.paginator = this.paginator;
-    this.loadUsers(1, 1)
+    this.refreshSubscription = this.commonService.refreshNeeded$.subscribe(() => {
+      this.loadUsers(this.paginator.pageIndex + 1, this.paginator.pageSize);
+    })
   }
 
   ngAfterViewInit(): void
@@ -50,12 +56,15 @@ export class UsersListComponent implements OnInit, AfterViewInit
         this.pageIndex = page -1;
         this.datasource.data = pagedResult.data
         this.datasource._updateChangeSubscription()
-        console.log(pagedResult.data)
-        console.log(this.datasource.data)
       },
       (error) =>
       {
         console.log(error)
       })
   }
+  ngOnDestroy()
+  {
+    if (this.refreshSubscription) this.refreshSubscription.unsubscribe();
+  }
+
 }

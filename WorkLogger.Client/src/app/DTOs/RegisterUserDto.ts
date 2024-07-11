@@ -3,6 +3,6 @@
   name: string
   surname: string
   username: string
-  role: string
+  role: number
   password: string
 }

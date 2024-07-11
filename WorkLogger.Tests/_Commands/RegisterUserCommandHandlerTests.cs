@@ -28,7 +28,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Name = "John",
             Surname = "Doe",
             UserName = "johndoe",
-            Roles = Roles.Employee,
+            Role = (int)Roles.Employee,
             Password = "password123"
         };
         
@@ -48,7 +48,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
         user.Name.Should().Be(request.Name);
         user.Surname.Should().Be(request.Surname);
         user.UserName.Should().Be(request.UserName);
-        user.Role.Should().Be(request.Roles);
+        user.Role.Should().Be(Roles.Employee);
     }
     
     [Fact]
@@ -65,7 +65,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Name = "John",
             Surname = "Doe",
             UserName = "johndoe",
-            Roles = Roles.Employee,
+            Role = (int)Roles.Employee,
             Password = "password123"
         };
         
@@ -99,7 +99,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Name = "John",
             Surname = "Doe",
             UserName = "johndoe",
-            Roles = Roles.CEO,
+            Role = (int)Roles.CEO,
             Password = "password123"
         };
         
@@ -137,7 +137,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Name = user.Name,
             Surname = user.Surname,
             UserName =  user.UserName,
-            Roles = user.Role,
+            Role = (int) user.Role,
             Password = "password123"
         };
         
@@ -167,7 +167,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Name = "John",
             Surname = "Doe",
             UserName =  "johndoe",
-            Roles = Roles.Employee,
+            Role = (int)Roles.Employee,
             Password = "password123"
         };
         
@@ -198,7 +198,7 @@ public class RegisterUserCommandHandlerTests : BaseTests
             Name = "John",
             Surname = "Doe",
             UserName = "johndoe",
-            Roles = (Roles)Int32.MaxValue,
+            Role = Int32.MaxValue,
             Password = "password123"
         };
         
