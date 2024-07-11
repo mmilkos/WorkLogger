@@ -12,5 +12,6 @@ public interface IWorkLoggerRepository
     Task AddAsync<T>(T entity) where T : class;
     Task<T?> FindEntityByIdAsync<T>(int id) where T : class;
     Task<T?> FindEntityByConditionAsync<T>(Expression<Func<T, bool>> condition) where T : class;
+    Task<T> UpdateEntityAsync<T>(T entity) where T : class;
 
 }

@@ -51,6 +51,20 @@ public class TeamController(IMediator mediator) : ControllerBase
         return StatusCode(500, result.ErrorsList);
     }
 
+    [HttpPost("assignUser")]
+    public async Task<ActionResult> AssignUserToTeam(AssignUserToTeamRequestDto requestDto)
+    {
+        var companyId = GetCompanyId(User.Claims.ToList());
+        if (companyId.HasValue == false) return BadRequest();
+
+        requestDto.CompanyId = companyId;
+
+        var result = await _mediator.Send(new AssignUserToTeamCommand(requestDto));
+        if (result.Success) return Ok();
+
+        return StatusCode(500, result.ErrorsList);
+    }
+
     private int? GetCompanyId(List<Claim> claims)
     {
         var claim = claims.Where(claim => claim.Type == "CompanyId").FirstOrDefault();

@@ -96,11 +96,38 @@ namespace WorkLogger.Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Team with this ID already has manager.
+        /// </summary>
+        public static string TeamAlreadyHasManager {
+            get {
+                return ResourceManager.GetString("TeamAlreadyHasManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Team with this ID does not exist.
+        /// </summary>
+        public static string TeamDoesNotExist {
+            get {
+                return ResourceManager.GetString("TeamDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User with this username already exist.
         /// </summary>
         public static string UserAlreadyExist {
             get {
                 return ResourceManager.GetString("UserAlreadyExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User with this ID does not exist.
+        /// </summary>
+        public static string UserDoesNotExist {
+            get {
+                return ResourceManager.GetString("UserDoesNotExist", resourceCulture);
             }
         }
     }

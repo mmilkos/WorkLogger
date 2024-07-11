@@ -39,7 +39,11 @@ public class GetAllTeamsPagedQueryHandler : IRequestHandler<GetAllTeamsPagedQuer
             return result;
         }
 
-        var teamResponseList = teamsPaged.Select(team => new TeamResponseDto { Name = team.Name }).ToList();
+        var teamResponseList = teamsPaged.Select(team => new TeamResponseDto
+        {
+            Id = team.Id,
+            Name = team.Name
+        }).ToList();
 
         result.Data = new PagedResultResponseDto<TeamResponseDto>()
         {

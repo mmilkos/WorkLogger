@@ -52,6 +52,13 @@ public class WorkLoggerRepository : IWorkLoggerRepository
         return await DbContext.Set<T>().Where(condition).FirstOrDefaultAsync();
     }
 
+    public async Task<T> UpdateEntityAsync<T>(T entity) where T : class
+    {
+        DbContext.Set<T>().Update(entity);
+        await DbContext.SaveChangesAsync();
+        return entity;
+    }
+
     public async Task<IDbContextTransaction> BeginTransactionAsync()
     {
         return await DbContext.Database.BeginTransactionAsync();

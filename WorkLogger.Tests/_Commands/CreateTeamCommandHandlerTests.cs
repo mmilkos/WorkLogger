@@ -12,8 +12,7 @@ public class CreateTeamCommandHandlerTests : BaseTests
     [Fact]
     public async Task CreateTeamCommandHandler_ShouldCreateTeam()
     {
-        var repository = new WorkLoggerRepository(_dbContext);
-        var company = await CompanyObjectMother.CreateAsync( dbContext: _dbContext, name: "Test");
+        var company = await CompanyObjectMother.CreateAsync(dbContext: _dbContext, name: "Test");
         // Arrange
         var dto = new CreateTeamRequestDto()
         {
