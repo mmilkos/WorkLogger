@@ -1,0 +1,10 @@
+<div class="d-flex flex-column">
+  <app-team-details-card [teamId]="teamId"></app-team-details-card>
+  <div class="d-flex flex-row">
+    <app-team-users-list [teamId]="teamId" [teamMode]="false"></app-team-users-list>
+    <div style="width: 5px"></div>
+    <app-team-users-list [teamId]="teamId" [teamMode]="true" ></app-team-users-list>
+  </div>
+</div>
+
+

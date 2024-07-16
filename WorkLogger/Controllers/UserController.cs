@@ -16,7 +16,7 @@ public class UserController(IMediator mediator) : ControllerBase
     private IMediator _mediator = mediator;
     
     [HttpGet]
-    public async Task<ActionResult<PagedResultResponseDto<UserListResponseDto>>> GetAllUsersPaged([FromQuery] int page, [FromQuery] int pageSize)
+    public async Task<ActionResult<PagedResultResponseDto<UserNameAndRoleResponseDto>>> GetAllUsersPaged([FromQuery] int page, [FromQuery] int pageSize)
     {
         var companyId = GetCompanyId(User.Claims.ToList());
         if (companyId.HasValue == false) return BadRequest();

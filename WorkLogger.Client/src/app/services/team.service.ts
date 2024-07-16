@@ -5,6 +5,9 @@ import {Observable, Subject} from "rxjs";
 import { AccountService } from './account.service';
 import { PagedResultModel } from '../models/pagedResult.model';
 import { Team } from '../models/team.model';
+import { TeamDetails } from '../models/teamDetails.model';
+import { User } from '../models/User.model';
+import { UserTeamDto } from '../DTOs/UserTeamDto';
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +30,35 @@ export class TeamService {
         headers: header,
         params: params
       })
+  }
+
+  getTeamDetails(teamId: number) : Observable<TeamDetails>
+  {
+    const header : HttpHeaders = this.accoount.getHeader();
+    return this.http.get<TeamDetails>(this.apiUrl + "/" + teamId,
+      {
+        headers: header,
+      })
+  }
+
+  assignUserToTeam(dto: UserTeamDto): Observable<any>
+  {
+    const header : HttpHeaders = this.accoount.getHeader();
+    return this.http.post(this.apiUrl + "/assignUser", dto, {headers: header});
+  }
+
+  unAssignUserToTeam(dto: UserTeamDto): Observable<any>
+  {
+    const header : HttpHeaders = this.accoount.getHeader();
+    return this.http.post(this.apiUrl + "/unAssignUser", dto, {headers: header});
+  }
+
+  getTeamMembersPaged(params: HttpParams, teamId: number | null): Observable<PagedResultModel<User>>
+  {
+    const header : HttpHeaders = this.accoount.getHeader();
+    return this.http.get<PagedResultModel<User>>(`${this.apiUrl}/${teamId}/teamMembers`,
+      {
+        headers: header,
+        params: params });
   }
 }

@@ -76,7 +76,7 @@ public class User
         }
     }
 
-    public void SetTeam(int teamId)
+    public void SetTeam(int? teamId)
     {
         TeamId = teamId;
     }
