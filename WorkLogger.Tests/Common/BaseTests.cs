@@ -8,6 +8,7 @@ using WorkLogger.Infrastructure.Repositories;
 
 namespace WorkLogger.Tests.Common;
 
+[Collection("Database tests")]
 public class BaseTests : IDisposable
 {
     protected WorkLoggerDbContext _dbContext;

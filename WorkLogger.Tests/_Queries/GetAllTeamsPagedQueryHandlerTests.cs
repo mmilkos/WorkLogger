@@ -40,8 +40,8 @@ public class GetAllTeamsPagedQueryHandlerTests : BaseTests
         result.ErrorsList.Should().BeEmpty();
         result.Success.Should().BeTrue();
         result.Data.TotalRecords.Should().Be(teams.Count);
-        result.Data.Data.Count.Should().Be(dto.PageSize);
+        result.Data.DataList.Count.Should().Be(dto.PageSize);
 
-        if (page == 2) result.Data.Data[0].Name.Should().Be(teams[5].Name);
+        if (page == 2) result.Data.DataList[0].Name.Should().Be(teams[5].Name);
     }
 }

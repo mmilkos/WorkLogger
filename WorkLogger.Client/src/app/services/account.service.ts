@@ -14,7 +14,13 @@ export class AccountService {
   public isLoggedIn: boolean = false;
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient)
+  {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      this.setToken(token);
+    }
+  }
 
   login(dto: LoginUserDto): Observable<any>
   {

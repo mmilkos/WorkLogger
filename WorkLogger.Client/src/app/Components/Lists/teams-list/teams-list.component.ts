@@ -6,6 +6,8 @@ import { Team } from '../../../models/team.model';
 import { TeamService } from '../../../services/team.service';
 import {Subscription} from "rxjs";
 import { CommonService } from '../../../services/common.service';
+import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-teams-list',
@@ -19,13 +21,16 @@ export class TeamsListComponent implements OnInit, AfterViewInit, OnDestroy
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   private pageSubscription?: Subscription;
   private refreshSubscription?: Subscription;
+  selectedRow = new FormControl(null);
+  selectedRowId: string | null = null;
 
   totalRecords: number | undefined;
   pageSize: number | undefined;
   pageIndex: number | undefined;
 
   constructor(private teamsService: TeamService,
-              private commonService: CommonService) {}
+              private commonService: CommonService,
+              private router: Router) {}
 
   ngOnInit(): void
   {
@@ -49,9 +54,36 @@ export class TeamsListComponent implements OnInit, AfterViewInit, OnDestroy
       this.totalRecords = pagedResult.totalRecords;
       this.pageSize = pageSize;
       this.pageIndex = page -1;
-      this.dataSource.data = pagedResult.data;
+      this.dataSource.data = pagedResult.dataList;
     });
   }
+
+  rowClicked(row: any) {
+    if(row.selected){
+      this.selectedRowId = null;
+      row.selected = false;
+    } else {
+      this.selectedRowId = row.id;
+      row.selected = true;
+    }
+  }
+
+  selectRow(row: any) {
+    if(row.selected){
+      this.selectedRowId = null;
+      row.selected = false;
+    } else {
+      this.selectedRowId = row.id;
+      row.selected = true;
+    }
+  }
+
+  onClick()
+  {
+    let link : string = this.router.url + "/" + this.selectedRowId;
+    this.router.navigateByUrl(link)
+  }
+
 
   ngOnDestroy()
   {

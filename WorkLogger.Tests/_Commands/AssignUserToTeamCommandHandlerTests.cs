@@ -118,44 +118,4 @@ public class AssignUserToTeamCommandHandlerTests : BaseTests
         teamInDb.TeamMembers.Should().BeEmpty();
     }
     
-    [Fact]
-    public async Task TeamAlreadyHasManager_ReturnError()
-    {
-        //Arrange
-        var repository = new WorkLoggerRepository(_dbContext);
-        
-        var company = await CompanyObjectMother.CreateAsync(dbContext: _dbContext, name: "testCompany");
-        var manager = await UserObjectMother.CreateAsync(dbContext: _dbContext, companyId: company.Id, roles: Roles.Manager);
-        var secondManager = await UserObjectMother.CreateAsync(dbContext: _dbContext, companyId: company.Id, roles: Roles.Manager);
-        
-        var team = await TeamObjectMother.CreateAsync(dbContext: _dbContext, 
-            name: "testTeam", 
-            companyId: company.Id, 
-            teamMembers: new List<User>() { manager });
-
-        var dto = new AssignUserToTeamRequestDto()
-        {
-            CompanyId = company.Id,
-            TeamId = team.Id,
-            UserId = secondManager.Id
-        };
-
-        var command = new AssignUserToTeamCommand(dto);
-
-        //Act
-        var handler = new AssignUserToTeamCommandHandler(repository);
-        
-        var result = await handler.Handle(command, CancellationToken.None);
-        
-        
-        var teamInDb = _dbContext.Teams
-            .Include(t => t.TeamMembers)
-            .ToList().FirstOrDefault();
-
-        //Assert
-        result.ErrorsList.Should().Contain(Errors.TeamAlreadyHasManager);
-        result.Success.Should().BeFalse();
-        teamInDb.Should().NotBe(null);
-        teamInDb.TeamMembers.Should().NotContain(secondManager);
-    }
 }

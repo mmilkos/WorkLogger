@@ -54,7 +54,7 @@ export class UsersListComponent implements OnInit, AfterViewInit, OnDestroy
         this.totalRecords = pagedResult.totalRecords;
         this.pageSize = pageSize;
         this.pageIndex = page -1;
-        this.datasource.data = pagedResult.data
+        this.datasource.data = pagedResult.dataList
         this.datasource._updateChangeSubscription()
       },
       (error) =>

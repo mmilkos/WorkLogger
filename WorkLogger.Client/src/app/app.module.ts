@@ -23,6 +23,10 @@ import { AddTeamFormComponent } from './Components/forms/add-team-form/add-team-
 import { TeamsListComponent } from './Components/Lists/teams-list/teams-list.component';
 import { UsersComponent } from './Components/Pages/users/users.component';
 import { UsersListComponent } from './Components/Lists/users-list/users-list.component';
+import { TeamDetailsComponent } from './Components/Pages/team-details/team-details.component';
+import { TeamDetailsCardComponent } from './Components/details/teams/team-details-card/team-details-card.component';
+import { TeamUsersListComponent } from './Components/Lists/team-users-list/team-users-list.component';
+
 
 
 
@@ -39,6 +43,9 @@ import { UsersListComponent } from './Components/Lists/users-list/users-list.com
     TeamsListComponent,
     UsersComponent,
     UsersListComponent,
+    TeamDetailsComponent,
+    TeamDetailsCardComponent,
+    TeamUsersListComponent,
   ],
   imports: [
     BrowserModule,

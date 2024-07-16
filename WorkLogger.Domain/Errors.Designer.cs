@@ -130,5 +130,14 @@ namespace WorkLogger.Domain {
                 return ResourceManager.GetString("UserDoesNotExist", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User with this ID was not assignet to this team.
+        /// </summary>
+        public static string UserNotAssignedToTeam {
+            get {
+                return ResourceManager.GetString("UserNotAssignedToTeam", resourceCulture);
+            }
+        }
     }
 }

@@ -21,7 +21,7 @@ public class AssignUserToTeamCommandHandler : IRequestHandler<AssignUserToTeamCo
         var dto = request.Dto;
         var result = new OperationResult<Unit>();
         
-        var team = await _repository.FindEntityByIdAsync<Team>(dto.TeamId);
+        var team = await _repository.FindEntityByConditionAsync<Team>(condition: team => team.Id == dto.TeamId, include: team => team.TeamMembers);
         var user = await _repository.FindEntityByIdAsync<User>(dto.UserId);
 
         result = Validate(result, team, user);
@@ -51,13 +51,6 @@ public class AssignUserToTeamCommandHandler : IRequestHandler<AssignUserToTeamCo
     {
         if (team == null) result.AddError(Errors.TeamDoesNotExist);
         if (user == null) result.AddError(Errors.UserDoesNotExist);
-        if (result.Success == false) return result;
-        
-        var isManager = user.Role == Roles.Manager;
-        if (isManager == false) return result;
-        
-        var teamHasManager = team.TeamMembers.Any(teamMember => teamMember.Role == Roles.Manager);
-        if (isManager && teamHasManager) result.AddError(Errors.TeamAlreadyHasManager);
 
         return result;
     }

@@ -4,5 +4,6 @@
   About = "about",
   Teams = "teams",
   Create = "create",
-  Users = "users"
+  Users = "users",
+  Id = "/:id"
 }
