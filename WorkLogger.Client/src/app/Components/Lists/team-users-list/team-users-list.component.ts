@@ -101,7 +101,6 @@ export class TeamUsersListComponent
         this.pageIndex = page -1;
         this.datasource.data = pagedResult.dataList
         this.datasource._updateChangeSubscription()
-
       },
       (error) =>
       {
