@@ -2,14 +2,19 @@
 
 public class UserTask
 {
-    public required int Id { get; set; }
+    public int Id { get; set; }
     public int AssignedUserId { get; set; }
     public int AuthorId { get; set; }
     public User AssignedUser { get; set; }
     public User Author { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public float LoggedHours { get; set; }
+    public float LoggedHours { get; set; } = 0;
     public DateTime CreatedDate { get; private set; } = DateTime.UtcNow;
-    public DateTime LastUpdateDate { get; set; }
+    public DateTime LastUpdateDate { get; set; } = DateTime.UtcNow;
+
+    public void SetCreatedDate(DateTime createdDate)
+    {
+        CreatedDate = createdDate;
+    }
 }

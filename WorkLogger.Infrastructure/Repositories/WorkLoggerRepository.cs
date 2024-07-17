@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using WorkLogger.Domain.DTOs;
-using WorkLogger.Domain.Entities;
 using WorkLogger.Domain.Interfaces;
 using WorkLogger.Infrastructure.Persistence;
 
