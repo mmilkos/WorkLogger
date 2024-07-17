@@ -15,20 +15,22 @@ public class GetAllUsersPagedQueryHandlerTests : BaseTests
     {
         // Arrange
         var repository = new WorkLoggerRepository(_dbContext);
-        var company = await CompanyObjectMother.CreateAsync(dbContext: _dbContext, name: "Test Company" );
+        var company1 = await CompanyObjectMother.CreateAsync(dbContext: _dbContext, name: "Test Company1" );
+        var company2 = await CompanyObjectMother.CreateAsync(dbContext: _dbContext, name: "Test Company2" );
         var users = new List<User>();
         
         for (int i = 0; i < 10; i++)
         {
-            var team = await UserObjectMother.CreateAsync(dbContext:_dbContext, companyId: company.Id, name:$"John{i}");
-            users.Add(team);
+            var user1 = await UserObjectMother.CreateAsync(dbContext:_dbContext, companyId: company1.Id, name:$"John{i}");
+            var user2 = await UserObjectMother.CreateAsync(dbContext:_dbContext, companyId: company2.Id, name:$"Steve{i}");
+            users.Add(user1);
         }
         
         var dto = new PagedRequestDto()
         {
             Page = page,
             PageSize = pageSize,
-            CompanyId = company.Id
+            CompanyId = company1.Id
         };
         var query = new GetAllUsersPagedQuery(dto);
         var handler = new GetAllUsersPagedQueryHandler(repository);
@@ -39,8 +41,10 @@ public class GetAllUsersPagedQueryHandlerTests : BaseTests
         // Assert
         result.ErrorsList.Should().BeEmpty();
         result.Success.Should().BeTrue();
-        result.Data.TotalRecords.Should().Be(users.Count);
         result.Data.DataList.Count.Should().Be(dto.PageSize);
+        
+        //We expect users only from company1
+        result.Data.TotalRecords.Should().Be(users.Count);
 
         if (page == 2) result.Data.DataList[0].Name.Should().Be(users[5].Name);
     }
