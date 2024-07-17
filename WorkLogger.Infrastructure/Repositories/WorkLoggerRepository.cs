@@ -17,11 +17,15 @@ public class WorkLoggerRepository : IWorkLoggerRepository
         _dbContext = dbContext;
     }
     
-    public async Task<List<T>> GetEntitiesPagedAsync<T>(Expression<Func<T, bool>> condition, PagedRequestDto pagingParams) where T : class
+    public async Task<List<T>> GetEntitiesPagedAsync<T>(Expression<Func<T, bool>> condition,
+        PagedRequestDto pagingParams, params Expression<Func<T, object>>[] include) where T : class
     {
+        var query = _dbContext.Set<T>().Where(condition);
+        foreach (var includeProperty in include) query = query.Include(includeProperty);
+        
         var offset = (pagingParams.Page - 1) * pagingParams.PageSize;
-        var pagedResult = await _dbContext.Set<T>()
-            .Where(condition)
+        
+        var pagedResult = await query
             .Skip(offset)
             .Take(pagingParams.PageSize)
             .ToListAsync();

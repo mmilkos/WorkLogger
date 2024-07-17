@@ -23,18 +23,16 @@ public class GetAllUsersPagedQueryHandler: IRequestHandler<GetAllUsersPagedQuery
         
         var usersPaged = await _repository.GetEntitiesPagedAsync<User>(
                 condition: user => user.CompanyId == dto.CompanyId,
-                pagingParams: dto);
+                pagingParams: dto,
+                include: user => user.Team);
 
         var count = await _repository.GetEntitiesCountAsync<User>(condition: user => user.CompanyId == dto.CompanyId);
-
-        var teams = await _repository.GetAllEntitiesAsync<Team>(team => team.CompanyId == dto.CompanyId);
-        var teamsDict = teams.ToDictionary(team => team.Id, team => team.Name);
         
         var usersResponseList = usersPaged.Select(user => new UserNameAndRoleResponseDto
         {
             Id = user.Id,
             Name = user.Name,
-            Team = user.TeamId.HasValue && teamsDict.TryGetValue(user.TeamId.Value, out var teamName) ? teamName : null,
+            Team = user.TeamId.HasValue ? user.Team.Name : null,
             Surname = user.Surname,
             Role = user.Role.ToString(),
         }).ToList();

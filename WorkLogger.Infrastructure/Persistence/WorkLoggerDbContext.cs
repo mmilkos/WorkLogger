@@ -27,7 +27,7 @@ public class WorkLoggerDbContext(DbContextOptions<WorkLoggerDbContext> options) 
             entity.Property(e => e.PasswordHash).HasMaxLength(64);
             entity.Property(e => e.PasswordSalt).HasMaxLength(16);
             
-            entity.HasOne<Team>()
+            entity.HasOne<Team>(u => u.Team)
                 .WithMany(p => p.TeamMembers)
                 .HasForeignKey(e => e.TeamId);
         });
@@ -38,12 +38,14 @@ public class WorkLoggerDbContext(DbContextOptions<WorkLoggerDbContext> options) 
             entity.Property(e => e.Name).HasMaxLength(255);
             entity.Property(e => e.Description).HasColumnType("TEXT");
             entity.Property(e => e.LoggedHours).HasColumnType("FLOAT");
+            entity.Property(e => e.CreatedDate).HasColumnType("DATE");
+            entity.Property(e => e.LastUpdateDate).HasColumnType("DATE");
             
-            entity.HasOne<User>()
+            entity.HasOne<User>(ut => ut.AssignedUser)
                 .WithMany()
                 .HasForeignKey(ut => ut.AssignedUserId);
 
-            entity.HasOne<User>()
+            entity.HasOne<User>(ut => ut.Author)
                 .WithMany()
                 .HasForeignKey(ut => ut.AuthorId);
         });

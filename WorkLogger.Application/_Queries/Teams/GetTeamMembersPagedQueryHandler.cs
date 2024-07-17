@@ -30,16 +30,12 @@ public class GetTeamMembersPagedQueryHandler : IRequestHandler<GetTeamMembersPag
 
         var teamMembers =  await _repository.GetEntitiesPagedAsync<User>(
             condition: user => user.TeamId == teamId && user.CompanyId == dto.CompanyId, 
-            pagingParams: dto);
-
-        var teams = await _repository.GetAllEntitiesAsync<Team>(condition: team => team.CompanyId == dto.CompanyId);
-        var teamsDict = teams.ToDictionary(team => team.Id, team => team.Name);
-
+            pagingParams: dto,
+            include: user => user.Team);
+        
         foreach (var user in teamMembers)
         {
-            var teamName = user.TeamId.HasValue && teamsDict.TryGetValue(user.TeamId.Value, out var name)
-                ? name
-                : null;
+            var teamName = user.TeamId.HasValue ? user.Team.Name : null;
             
             var userDto = new UserNameAndRoleResponseDto()
             {

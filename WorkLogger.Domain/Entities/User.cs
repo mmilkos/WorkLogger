@@ -17,6 +17,7 @@ public class User
     public byte[] PasswordHash { get; private set; }
     public byte[] PasswordSalt { get; private set; }
     public int? TeamId { get; private set; }
+    public Team Team { get; private set; }
     
     public class Builder
     {
