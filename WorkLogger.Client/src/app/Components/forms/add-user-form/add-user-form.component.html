@@ -1,1 +1,37 @@
-<p>add-user-form works!</p>
+<div class="card mb-3"style="width: 50vw; margin: auto; top: 2rem; background-color: #242526">
+  <div class="card-body">
+    <form [formGroup]="addUserForm">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Name</label>
+          <input class="form-control" id="name" formControlName="name">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Surname</label>
+          <input class="form-control" id="surname" formControlName="surname">
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Username</label>
+          <input class="form-control" id="username" formControlName="username">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="role">Role</label>
+          <select class="form-control" id="role" formControlName="role">
+            <option value="0">Admin</option>
+            <option value="1">Manager</option>
+            <option value="2">Employee</option>
+          </select>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" formControlName="password">
+        </div>
+      </div>
+      <button [disabled]="!isFormValidValue" type="button" class="btn btn-primary" style="width: 100%" (click)="onSubmit()">Submit</button>
+    </form>
+  </div>
+</div>

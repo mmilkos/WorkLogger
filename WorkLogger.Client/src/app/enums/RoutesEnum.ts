@@ -3,5 +3,8 @@
   Register = "register",
   About = "about",
   Teams = "teams",
-  Create = "create"
+  Create = "create",
+  Users = "users",
+  Id = "/:id",
+  Tasks = "tasks"
 }

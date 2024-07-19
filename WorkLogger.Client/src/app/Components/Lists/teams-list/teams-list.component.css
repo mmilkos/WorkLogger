@@ -1,6 +1,14 @@
+.header
+{
+  width: 50vw;
+  margin: auto;
+  top: 2rem;
+  background-color: #242526
+}
+
 .full-width-table {
   width: 100%;
-  margin-top: 50px;
+  margin-top: 35px;
 }
 
 th, td {
@@ -15,4 +23,10 @@ th
 
 .full-width-table tr {
   display: flex;
+}
+
+mat-header-cell
+{
+  background-color: #242526;
+  color: white
 }

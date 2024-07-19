@@ -1,6 +1,6 @@
 ﻿export interface PagedResultModel<T>
 {
-  data: T[];
+  dataList: T[];
   pageNumber: number;
   totalRecords: number;
 }

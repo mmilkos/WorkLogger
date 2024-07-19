@@ -21,6 +21,15 @@ import { SideBarComponent } from './Components/side-bar/side-bar.component';
 import { AddUserFormComponent } from './Components/forms/add-user-form/add-user-form.component';
 import { AddTeamFormComponent } from './Components/forms/add-team-form/add-team-form.component';
 import { TeamsListComponent } from './Components/Lists/teams-list/teams-list.component';
+import { UsersComponent } from './Components/Pages/users/users.component';
+import { UsersListComponent } from './Components/Lists/users-list/users-list.component';
+import { TeamDetailsComponent } from './Components/Pages/team-details/team-details.component';
+import { TeamDetailsCardComponent } from './Components/details/teams/team-details-card/team-details-card.component';
+import { TeamUsersListComponent } from './Components/Lists/team-users-list/team-users-list.component';
+import { TasksComponent } from './Components/Pages/tasks/tasks.component';
+import { AddTaskFormComponent } from './Components/forms/add-task-form/add-task-form.component';
+
+
 
 
 @NgModule({
@@ -34,6 +43,13 @@ import { TeamsListComponent } from './Components/Lists/teams-list/teams-list.com
     AddUserFormComponent,
     AddTeamFormComponent,
     TeamsListComponent,
+    UsersComponent,
+    UsersListComponent,
+    TeamDetailsComponent,
+    TeamDetailsCardComponent,
+    TeamUsersListComponent,
+    TasksComponent,
+    AddTaskFormComponent,
   ],
   imports: [
     BrowserModule,

@@ -41,7 +41,7 @@ export class HeaderComponent
       {
         this.accountService.setToken(response.jwtToken);
         this.toastrService.success("Logged in", "Succes")
-        this.router.navigateByUrl('/' + RoutesEnum.Teams)
+        this.router.navigateByUrl('/' + RoutesEnum.About)
         this.loginForm.reset();
       },
       error => error.error.forEach((error: string) => this.toastrService.error(error, 'Error'))

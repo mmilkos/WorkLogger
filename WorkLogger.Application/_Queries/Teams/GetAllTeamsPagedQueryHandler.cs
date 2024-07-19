@@ -21,29 +21,25 @@ public class GetAllTeamsPagedQueryHandler : IRequestHandler<GetAllTeamsPagedQuer
     {
         var dto = request.Dto;
         var result = new OperationResult<PagedResultResponseDto<TeamResponseDto>>();
-        
-        List<Team> teamsPaged;
-        int count;
-        
-        try
-        {
-             count = await _repository.GetEntitiesCount<Team>(team => team.CompanyId == dto.CompanyId);
-             teamsPaged = await _repository.GetEntitiesPaged<Team>(
-                 condition: team => team.CompanyId == dto.CompanyId, 
-                 pagingParams: dto);
-        }
-        catch (Exception e)
-        {
-            result.AddError(e.Message);
-            result.ErrorType = ErrorTypesEnum.ServerError;
-            return result;
-        }
+      
+        var count = await _repository.GetEntitiesCountAsync<Team>(team => team.CompanyId == dto.CompanyId);
 
-        var teamResponseList = teamsPaged.Select(team => new TeamResponseDto { Name = team.Name }).ToList();
+        if (count == 0) return result;
+        
+        var teamsPaged = await _repository.GetEntitiesPagedAsync<Team>(
+            condition: team => team.CompanyId == dto.CompanyId, 
+                 pagingParams: dto);
+        
+        
+        var teamResponseList = teamsPaged.Select(team => new TeamResponseDto
+        {
+            Id = team.Id,
+            Name = team.Name
+        }).ToList();
 
         result.Data = new PagedResultResponseDto<TeamResponseDto>()
         {
-            Data = teamResponseList,
+            DataList = teamResponseList,
             PageNumber = dto.Page,
             TotalRecords = count
         };

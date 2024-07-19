@@ -21,30 +21,29 @@ public class RegisterUserCommandHandler(IWorkLoggerRepository repository) : IReq
         Roles roles;
        
 
-        var userInDb = await _repository.FindEntityByCondition<User>(user => user.UserName == dto.UserName);
+        var userInDb = await _repository.FindEntityByConditionAsync<User>(user => user.UserName == dto.UserName);
         var company = await _repository.FindEntityByIdAsync<Company>(dto.CompanyId);
-        var isValidRole = Enum.IsDefined(typeof(Roles), dto.Roles);
+        var isValidRole = Enum.IsDefined(typeof(Roles), dto.Role);
+        var isCorrectPasswordLen = dto.Password.Length >= 8;
 
         if (userInDb != null) operationResult.AddError(Errors.UserAlreadyExist);
         if (company == null) operationResult.AddError(Errors.CompanyDoesNotExist);
         if (isValidRole == false) operationResult.AddError(Errors.RoleDoesNotExist);
-
+        if (isCorrectPasswordLen == false) operationResult.AddError(Errors.ShortPassword);
         
-
+        
         if (operationResult.Success == false)
         {
             operationResult.ErrorType = ErrorTypesEnum.BadRequest;
             return operationResult;
         }
         
-        roles = dto.Roles;
-        
         User user;
 
         using ( var hmac = new HMACSHA512())
         {
             user = new User.Builder()
-                .WithCompanyInfo(companyId: dto.CompanyId, teamId: null, role: dto.Roles)
+                .WithCompanyInfo(companyId: dto.CompanyId, teamId: null, role: (Roles)dto.Role)
                 .WithUserCredentials(name: dto.Name, surname: dto.Surname, userName: dto.UserName)
                 .WithPassword(passwordHash: hmac.ComputeHash(Encoding.UTF8.GetBytes(dto.Password)),
                     passwordSalt: hmac.Key)

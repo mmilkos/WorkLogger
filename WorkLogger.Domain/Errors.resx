@@ -30,4 +30,19 @@
     <data name="InvalidCredentials" xml:space="preserve">
         <value>Incorrect username or password</value>
     </data>
+    <data name="ShortPassword" xml:space="preserve">
+        <value>Password is too short</value>
+    </data>
+    <data name="UserDoesNotExist" xml:space="preserve">
+        <value>User with this ID does not exist</value>
+    </data>
+    <data name="TeamDoesNotExist" xml:space="preserve">
+        <value>Team with this ID does not exist</value>
+    </data>
+    <data name="TeamAlreadyHasManager" xml:space="preserve">
+        <value>Team with this ID already has manager</value>
+    </data>
+    <data name="UserNotAssignedToTeam" xml:space="preserve">
+        <value>User with this ID was not assignet to this team</value>
+    </data>
 </root>

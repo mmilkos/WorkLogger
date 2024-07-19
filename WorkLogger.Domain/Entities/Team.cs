@@ -5,8 +5,6 @@ namespace WorkLogger.Domain.Entities;
 
 public class Team : BaseEntity
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public string Name { get; private set; }
     public ICollection<User> TeamMembers { get; set; }
 

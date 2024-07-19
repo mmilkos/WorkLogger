@@ -1,19 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { CreateTeamDto } from '../../../DTOs/createTeamDto';
 import { TeamService } from '../../../services/team.service';
+import { Subscription } from 'rxjs';
+import { CommonService } from '../../../services/common.service';
 
 @Component({
   selector: 'app-add-team-form',
   templateUrl: './add-team-form.component.html',
   styleUrl: './add-team-form.component.css'
 })
-export class AddTeamFormComponent implements OnInit
+export class AddTeamFormComponent implements OnInit, OnDestroy
 {
   isFormValidValue = false;
+  private statusSubscription?: Subscription;
 
-  constructor(private teamService: TeamService, private toastrService : ToastrService) {}
+  constructor(private teamService: TeamService,
+              private toastrService : ToastrService,
+              private commonService: CommonService) {}
 
   ngOnInit(): void
   {
@@ -27,7 +32,7 @@ export class AddTeamFormComponent implements OnInit
 
   isFormValid()
   {
-    this.addTeamForm.statusChanges.subscribe(status => {
+    this.statusSubscription = this.addTeamForm.statusChanges.subscribe(status => {
       if (status == 'VALID') this.isFormValidValue = true;
       else this.isFormValidValue = false;
     });
@@ -45,9 +50,14 @@ export class AddTeamFormComponent implements OnInit
       {
         this.toastrService.success("Added team", "Succes");
         this.addTeamForm.reset();
+        this.commonService.refresh()
       },
-      (error) => {
-        this.toastrService.error(error.error, "Error");
-      })
+      (error) => error.error.forEach((error: string) => this.toastrService.error(error, 'Error')))
+  }
+
+  ngOnDestroy() {
+    if (this.statusSubscription) {
+      this.statusSubscription.unsubscribe();
+    }
   }
 }

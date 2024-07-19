@@ -1,6 +1,6 @@
 ﻿namespace WorkLogger.Domain.DTOs;
 
-public class UserResponseDto
+public class UserLoginResponseDto
 {
     public string JwtToken { get; set; }
     
