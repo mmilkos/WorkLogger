@@ -5,5 +5,6 @@
   Teams = "teams",
   Create = "create",
   Users = "users",
-  Id = "/:id"
+  Id = "/:id",
+  Tasks = "tasks"
 }

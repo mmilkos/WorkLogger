@@ -7,6 +7,7 @@ import { TeamsComponent } from './Components/Pages/teams/teams.component';
 import { RoutesEnum } from './enums/RoutesEnum';
 import { UsersComponent } from './Components/Pages/users/users.component';
 import { TeamDetailsComponent } from './Components/Pages/team-details/team-details.component';
+import { TasksComponent } from './Components/Pages/tasks/tasks.component';
 
 
 const routes: Routes =
@@ -16,8 +17,8 @@ const routes: Routes =
     {path: RoutesEnum.Teams, component: TeamsComponent},
     {path: RoutesEnum.Teams + RoutesEnum.Id, component: TeamDetailsComponent},
     {path: RoutesEnum.Users, component: UsersComponent},
+    {path: RoutesEnum.Tasks, component: TasksComponent},
     {path: '**', component: AboutComponent, pathMatch: 'full' },
-
   ];
 
 @NgModule({

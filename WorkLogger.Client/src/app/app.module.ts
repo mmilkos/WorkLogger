@@ -26,6 +26,8 @@ import { UsersListComponent } from './Components/Lists/users-list/users-list.com
 import { TeamDetailsComponent } from './Components/Pages/team-details/team-details.component';
 import { TeamDetailsCardComponent } from './Components/details/teams/team-details-card/team-details-card.component';
 import { TeamUsersListComponent } from './Components/Lists/team-users-list/team-users-list.component';
+import { TasksComponent } from './Components/Pages/tasks/tasks.component';
+import { AddTaskFormComponent } from './Components/forms/add-task-form/add-task-form.component';
 
 
 
@@ -46,6 +48,8 @@ import { TeamUsersListComponent } from './Components/Lists/team-users-list/team-
     TeamDetailsComponent,
     TeamDetailsCardComponent,
     TeamUsersListComponent,
+    TasksComponent,
+    AddTaskFormComponent,
   ],
   imports: [
     BrowserModule,

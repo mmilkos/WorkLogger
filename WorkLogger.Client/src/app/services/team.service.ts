@@ -6,8 +6,10 @@ import { AccountService } from './account.service';
 import { PagedResultModel } from '../models/pagedResult.model';
 import { Team } from '../models/team.model';
 import { TeamDetails } from '../models/teamDetails.model';
-import { User } from '../models/User.model';
+import {User, UsersNamesResponseDto} from '../models/User.model';
 import { UserTeamDto } from '../DTOs/UserTeamDto';
+import { TeamsNamesDto } from '../DTOs/TeamsNamesDto.model';
+import { UserIdAndName } from '../models/UserIdAndName.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,7 @@ export class TeamService {
   createTeam(dto: CreateTeamDto): Observable<any>
   {
     const header : HttpHeaders = this.accoount.getHeader();
-    return this.http.post(this.apiUrl + "/create", dto, {headers: header})
+    return this.http.post(`${this.apiUrl}/create`, dto, {headers: header})
   }
 
   getTeamsPaged(params: HttpParams): Observable<PagedResultModel<Team>>
@@ -35,7 +37,7 @@ export class TeamService {
   getTeamDetails(teamId: number) : Observable<TeamDetails>
   {
     const header : HttpHeaders = this.accoount.getHeader();
-    return this.http.get<TeamDetails>(this.apiUrl + "/" + teamId,
+    return this.http.get<TeamDetails>(`${this.apiUrl}/${teamId}`,
       {
         headers: header,
       })
@@ -44,13 +46,13 @@ export class TeamService {
   assignUserToTeam(dto: UserTeamDto): Observable<any>
   {
     const header : HttpHeaders = this.accoount.getHeader();
-    return this.http.post(this.apiUrl + "/assignUser", dto, {headers: header});
+    return this.http.post(`${this.apiUrl}/assignUser`, dto, {headers: header});
   }
 
   unAssignUserToTeam(dto: UserTeamDto): Observable<any>
   {
     const header : HttpHeaders = this.accoount.getHeader();
-    return this.http.post(this.apiUrl + "/unAssignUser", dto, {headers: header});
+    return this.http.post(`${this.apiUrl}/unAssignUser`, dto, {headers: header});
   }
 
   getTeamMembersPaged(params: HttpParams, teamId: number | null): Observable<PagedResultModel<User>>
@@ -60,5 +62,23 @@ export class TeamService {
       {
         headers: header,
         params: params });
+  }
+
+  getTeamsNames() : Observable<TeamsNamesDto>
+  {
+    const header : HttpHeaders = this.accoount.getHeader();
+    return this.http.get<TeamsNamesDto>(`${this.apiUrl}/names`,
+      {
+        headers: header
+      })
+  }
+
+  getTeamMembersNames(teamId: string | null) : Observable<UsersNamesResponseDto>
+  {
+    const header : HttpHeaders = this.accoount.getHeader();
+    return this.http.get<UsersNamesResponseDto>(`${this.apiUrl}/${teamId}/teamMembers/names`,
+      {
+        headers: header
+      })
   }
 }

@@ -6,3 +6,7 @@
   team: string,
   role: string
 }
+
+export interface UsersNamesResponseDto {
+  names: User[];
+}

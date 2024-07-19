@@ -113,6 +113,30 @@ public class TeamController(IMediator mediator) : ControllerBase
 
         return StatusCode(500, result.ErrorsList);
     }
+
+    [HttpGet("names")]
+    public async Task<ActionResult<TeamsNamesResponseDto>> GetTeamsNames()
+    {
+        var companyId = GetCompanyId(User.Claims.ToList());
+        if (companyId.HasValue == false) return BadRequest();
+        var result = await _mediator.Send(new GetAllTeamsNamesQuery(companyId));
+
+        if (result.Success) return Ok(result.Data);
+
+        return StatusCode(500, result.ErrorsList);
+    }
+    
+    [HttpGet("{id}/teamMembers/names")]
+    public async Task<ActionResult<UsersNamesResponseDto>> GetTeamMembersNames([FromRoute] int id)
+    {
+        var companyId = GetCompanyId(User.Claims.ToList());
+        if (companyId.HasValue == false) return BadRequest();
+        var result = await _mediator.Send(new GetAllTeamMembersNamesQuery(id));
+
+        if (result.Success) return Ok(result.Data);
+
+        return StatusCode(500, result.ErrorsList);
+    }
     
     private int? GetCompanyId(List<Claim> claims)
     {

@@ -24,6 +24,7 @@ public class AddTaskCommandHandler : IRequestHandler<AddTaskCommand, OperationRe
         {
             AssignedUserId = dto.AssignedUserId,
             AuthorId = dto.AuthorId,
+            TeamId = dto.TeamId,
             Name = dto.Name,
             Description = dto.Description
         };

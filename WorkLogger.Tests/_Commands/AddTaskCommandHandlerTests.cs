@@ -15,6 +15,7 @@ public class AddTaskCommandHandlerTests : BaseTests
         //Arrange
         var respository = new WorkLoggerRepository(_dbContext);
         var company = await CompanyObjectMother.CreateAsync(dbContext: _dbContext, name: "test");
+        var team = await TeamObjectMother.CreateAsync(dbContext: _dbContext, companyId: company.Id, name: "testTeam");
         var assignedUser = await UserObjectMother.CreateAsync(dbContext: _dbContext, companyId: company.Id, name: "User");
         var author = await UserObjectMother.CreateAsync(dbContext: _dbContext, companyId: company.Id, name: "Author");
 
@@ -22,6 +23,7 @@ public class AddTaskCommandHandlerTests : BaseTests
         {
             AssignedUserId = assignedUser.Id,
             AuthorId = author.Id,
+            TeamId = team.Id,
             Name = "Task Name",
             Description = "Task Description"
         };
@@ -34,13 +36,16 @@ public class AddTaskCommandHandlerTests : BaseTests
         var result = await handler.Handle(command, CancellationToken.None);
         var taskInDb = await _dbContext.UserTasks.Include(task => task.AssignedUser)
             .Include(task => task.Author)
+            .Include(task => task.Team)
             .FirstOrDefaultAsync();
         
         //Assert
         result.ErrorsList.Should().BeEmpty();
         result.Success.Should().BeTrue();
+        taskInDb.TeamId.Should().Be(team.Id);
         taskInDb.AssignedUserId.Should().Be(assignedUser.Id);
         taskInDb.AuthorId.Should().Be(author.Id);
+        taskInDb.Team.Should().Be(team);
         taskInDb.AssignedUser.Should().Be(assignedUser);
         taskInDb.Author.Should().Be(author);
         taskInDb.Name.Should().Be(dto.Name);

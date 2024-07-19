@@ -9,6 +9,7 @@ public class UserTaskObjectMother
         WorkLoggerDbContext dbContext,
         int assignedUserId,
         int authorId,
+        int teamId,
         float loggedHours = 0,
         string name = "Test task", 
         string description = "Test desc")
@@ -17,6 +18,7 @@ public class UserTaskObjectMother
         {
             AssignedUserId = assignedUserId,
             AuthorId = authorId,
+            TeamId = teamId,
             LoggedHours = loggedHours,
             Name = name,
             Description = description

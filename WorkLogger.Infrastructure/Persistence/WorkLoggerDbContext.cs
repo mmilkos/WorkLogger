@@ -48,6 +48,10 @@ public class WorkLoggerDbContext(DbContextOptions<WorkLoggerDbContext> options) 
             entity.HasOne<User>(ut => ut.Author)
                 .WithMany()
                 .HasForeignKey(ut => ut.AuthorId);
+
+            entity.HasOne<Team>(ut => ut.Team)
+                .WithMany()
+                .HasForeignKey(ut => ut.TeamId);
         });
         
         modelBuilder.Entity<Team>(entity =>

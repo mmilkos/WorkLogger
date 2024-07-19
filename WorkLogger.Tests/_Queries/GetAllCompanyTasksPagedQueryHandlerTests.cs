@@ -14,9 +14,11 @@ public class GetAllCompanyTasksPagedQueryHandlerTests : BaseTests
     {
         //Arrange
         var repository = new WorkLoggerRepository(_dbContext);
+        
         var company1 = await CompanyObjectMother.CreateAsync(dbContext: _dbContext, "testName");
         var company2 = await CompanyObjectMother.CreateAsync(dbContext: _dbContext, "testName2");
-      
+
+        var team1 = await TeamObjectMother.CreateAsync(dbContext: _dbContext, companyId: company1.Id, name: "team1");
         
         var author1 = await UserObjectMother.CreateAsync(dbContext: _dbContext, companyId: company1.Id, name: "author1");
         var assignedUser1 = await UserObjectMother.CreateAsync(dbContext: _dbContext, companyId: company1.Id, name: "assignedUser1");
@@ -24,23 +26,26 @@ public class GetAllCompanyTasksPagedQueryHandlerTests : BaseTests
         var author2 = await UserObjectMother.CreateAsync(dbContext: _dbContext, companyId: company1.Id, name: "author2");
         var assignedUser2 = await UserObjectMother.CreateAsync(dbContext: _dbContext, companyId: company1.Id, name: "assignedUser2");
         
-        //different company
-        var author3 = await UserObjectMother.CreateAsync(dbContext: _dbContext, companyId: company2.Id, name: "author3");
-        var assignedUser3 = await UserObjectMother.CreateAsync(dbContext: _dbContext, companyId: company2.Id, name: "assignedUser3");
-        
         var task1 = await UserTaskObjectMother.CreateAsync(dbContext: _dbContext, assignedUserId: assignedUser1.Id,
             authorId: author1.Id,
+            teamId: team1.Id,
             name: "Task1", description: "Task1 desc");
         
         var task2 = await UserTaskObjectMother.CreateAsync(dbContext: _dbContext, assignedUserId: assignedUser2.Id,
             authorId: author2.Id,
+            teamId: team1.Id,
             loggedHours: 10,
             name: "Task2", description: "Task2 desc");
         
-        //task from different company
+        //different company
+        var author3 = await UserObjectMother.CreateAsync(dbContext: _dbContext, companyId: company2.Id, name: "author3");
+        var assignedUser3 = await UserObjectMother.CreateAsync(dbContext: _dbContext, companyId: company2.Id, name: "assignedUser3");
+        var team2 = await TeamObjectMother.CreateAsync(dbContext: _dbContext, companyId: company2.Id, name: "team2");
+        
         var task3 = await UserTaskObjectMother.CreateAsync(dbContext: _dbContext, assignedUserId: assignedUser3.Id,
             authorId: author3.Id,
             loggedHours: 10,
+            teamId: team2.Id,
             name: "Task3", description: "Task3 desc");
         
 

@@ -4,12 +4,8 @@ using WorkLogger.Domain.Enums;
 
 namespace WorkLogger.Domain.Entities;
 
-public class User
+public class User : BaseEntity
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; private set; }
-    public int CompanyId { get; private set; }
     public string Name { get; private set; }
     public string Surname { get; private set; }
     public string UserName { get; private set; }
