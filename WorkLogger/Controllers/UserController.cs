@@ -8,6 +8,7 @@ using WorkLogger.Domain.DTOs_responses;
 
 namespace WorkLogger.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/user")]
 [AllowAnonymous]

@@ -5,7 +5,7 @@ using WorkLogger.Domain.DTOs_responses;
 
 namespace WorkLogger.Application._Commands.Tasks;
 
-public class GetAllCompanyTasksPagedQuery : IRequest<OperationResult<PagedResultResponseDto<UserTasksResponseDto>>>
+public class GetAllCompanyTasksPagedQuery : IRequest<OperationResult<PagedResultResponseDto<UserTaskResponseDto>>>
 {
     public PagedRequestDto Dto { get; }
     

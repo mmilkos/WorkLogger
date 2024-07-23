@@ -68,15 +68,23 @@ public class GetAllCompanyTasksPagedQueryHandlerTests : BaseTests
         result.Data.DataList.Count.Should().Be(2);
         
         //task1 
+        result.Data.DataList[0].Id.Should().Be(task1.Id);
         result.Data.DataList[0].Name.Should().Be(task1.Name);
-        result.Data.DataList[0].LoggedHours.Should().Be(task1.LoggedHours);
-        result.Data.DataList[0].AuthorName.Should().Be(author1.Name);
-        result.Data.DataList[0].AssignedUserName.Should().Be(assignedUser1.Name);
+        result.Data.DataList[0].Team.Should().Be(team1.Name);
+        result.Data.DataList[0].AssignedUser.Id.Should().Be(assignedUser1.Id);
+        result.Data.DataList[0].AssignedUser.Name.Should().Be(assignedUser1.Name);
+        result.Data.DataList[0].AssignedUser.Surname.Should().Be(assignedUser1.Surname);
+        result.Data.DataList[0].AssignedUser.Team.Should().Be(team1.Name);
+        result.Data.DataList[0].AssignedUser.Role.Should().Be(assignedUser1.Role.ToString());
         
         //task2
+        result.Data.DataList[1].Id.Should().Be(task2.Id);
         result.Data.DataList[1].Name.Should().Be(task2.Name);
-        result.Data.DataList[1].LoggedHours.Should().Be(task2.LoggedHours);
-        result.Data.DataList[1].AuthorName.Should().Be(author2.Name);
-        result.Data.DataList[1].AssignedUserName.Should().Be(assignedUser2.Name);
+        result.Data.DataList[1].Team.Should().Be(team1.Name);
+        result.Data.DataList[1].AssignedUser.Id.Should().Be(assignedUser2.Id);
+        result.Data.DataList[1].AssignedUser.Name.Should().Be(assignedUser2.Name);
+        result.Data.DataList[1].AssignedUser.Surname.Should().Be(assignedUser2.Surname);
+        result.Data.DataList[1].AssignedUser.Team.Should().Be(team1.Name);
+        result.Data.DataList[1].AssignedUser.Role.Should().Be(assignedUser2.Role.ToString());
     }
 }

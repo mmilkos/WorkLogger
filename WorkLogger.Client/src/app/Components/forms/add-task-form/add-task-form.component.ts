@@ -8,6 +8,7 @@ import { UserIdAndName } from '../../../models/UserIdAndName.model';
 import { AddTaskDto } from '../../../DTOs/addTaskDto.model';
 import { AccountService } from '../../../services/account.service';
 import { TaskService } from '../../../services/task.service';
+import { CommonService } from '../../../services/common.service';
 
 @Component({
   selector: 'app-add-task-form',
@@ -23,7 +24,8 @@ export class AddTaskFormComponent implements OnDestroy, OnInit
   constructor(private teamService: TeamService,
               private toastrService: ToastrService,
               private accountService: AccountService,
-              private taskService: TaskService)
+              private taskService: TaskService,
+              private commonService: CommonService)
   {
     this.isFormValid();
     this.getTeamsNames();
@@ -106,7 +108,7 @@ export class AddTaskFormComponent implements OnDestroy, OnInit
         {
           this.toastrService.success("Added succesfuly", "Succes")
           this.addTaskForm.reset()
-
+          this.commonService.refresh();
         } ,
         error => this.toastrService.error(error.error, "Error")
       )
