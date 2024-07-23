@@ -96,6 +96,15 @@ namespace WorkLogger.Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Task with this ID does not exist.
+        /// </summary>
+        public static string TaskDoesNotExist {
+            get {
+                return ResourceManager.GetString("TaskDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Team with this ID already has manager.
         /// </summary>
         public static string TeamAlreadyHasManager {

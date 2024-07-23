@@ -44,9 +44,8 @@ export class TeamUsersListComponent
   ngOnInit(): void
   {
     this.datasource.paginator = this.paginator;
-    this.refreshSubscription = this.commonService.refreshNeeded$.subscribe(() => {
       this.loadUsers(this.paginator.pageIndex + 1, this.paginator.pageSize);
-    })
+
   }
 
   ngAfterViewInit(): void

@@ -45,4 +45,7 @@
     <data name="UserNotAssignedToTeam" xml:space="preserve">
         <value>User with this ID was not assignet to this team</value>
     </data>
+    <data name="TaskDoesNotExist" xml:space="preserve">
+        <value>Task with this ID does not exist</value>
+    </data>
 </root>

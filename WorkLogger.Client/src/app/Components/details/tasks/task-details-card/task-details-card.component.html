@@ -1,0 +1,48 @@
+<div class="card mb-3" style="width: 50vw; margin: auto; top: 2rem; background-color: #242526">
+  <div class="card-body">
+    <form [formGroup]="editTaskForm">
+      <h2 class="card-title textColor">Add Task</h2>
+      <div class="mb-3 d-flex flex-column">
+        <div class="flex-grow-1">
+          <label for="taskName" class="form-label">Name</label>
+          <input type="text" class="form-control"
+                 id="taskName" formControlName="taskName">
+        </div>
+
+        <div class="flex-grow-1">
+          <label for="taskDesc" class="form-label">Description</label>
+          <input type="text" class="form-control"
+                 id="taskDesc" formControlName="taskDesc">
+        </div>
+
+        <div class="flex-grow-1">
+          <label for="team" class="form-label">Team</label>
+          <input type="text" readonly class="form-control" id="team"
+                 formControlName="team">
+        </div>
+
+        <div class="flex-grow-1">
+          <label for="assignedUser" class="form-label">Assigned user</label>
+          <input type="text" readonly class="form-control" id="assignedUser"
+                 formControlName="assignedUser">
+        </div>
+
+        <div class="flex-grow-1">
+          <label for="author" class="form-label">Author</label>
+          <input type="text" readonly class="form-control" id="author"
+                 formControlName="author">
+        </div>
+
+        <div class="flex-grow-1">
+          <label for="loggedHours" class="form-label">Logged hours</label>
+          <input type="number" class="form-control"
+                 id="loggedHours" formControlName="loggedHours">
+        </div>
+
+        <br>
+        <!--[disabled]="!isFormValidValue"-->
+        <button id="submitBtn" type="button" class="btn btn-primary" (click)="onSave()">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

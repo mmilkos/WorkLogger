@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkLogger.Application._Commands.Teams;
 using WorkLogger.Application._Queries.Teams;
@@ -10,6 +11,7 @@ using WorkLogger.Domain.Entities;
 
 namespace WorkLogger.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/team")]
 public class TeamController(IMediator mediator) : ControllerBase

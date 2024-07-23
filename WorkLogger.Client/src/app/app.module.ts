@@ -28,6 +28,8 @@ import { TeamDetailsCardComponent } from './Components/details/teams/team-detail
 import { TeamUsersListComponent } from './Components/Lists/team-users-list/team-users-list.component';
 import { TasksComponent } from './Components/Pages/tasks/tasks.component';
 import { AddTaskFormComponent } from './Components/forms/add-task-form/add-task-form.component';
+import { TaskListComponent } from './Components/lists/task-list/task-list.component';
+import { TaskDetailsCardComponent } from './Components/details/tasks/task-details-card/task-details-card.component';
 
 
 
@@ -50,6 +52,8 @@ import { AddTaskFormComponent } from './Components/forms/add-task-form/add-task-
     TeamUsersListComponent,
     TasksComponent,
     AddTaskFormComponent,
+    TaskListComponent,
+    TaskDetailsCardComponent,
   ],
   imports: [
     BrowserModule,
