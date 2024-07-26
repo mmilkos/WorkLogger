@@ -28,12 +28,13 @@ public class CreateSummaryFileQueryHandler : IRequestHandler<CreateSummaryFileQu
 
         var team = await _repository.FindEntityByIdAsync<Team>(dto.TeamId);
         var teamsTasks = await _repository.GetAllEntitiesAsync<UserTask>(
-            task => task.TeamId == dto.TeamId 
+            condition:  task => task.TeamId == dto.TeamId 
             && task.LastUpdateDate >= dto.StartDate 
             && task.LastUpdateDate <= dto.EndDate);
         
         var data = new Dictionary<string, List<string>>
         {
+            {"Reported date",teamsTasks.Select(task => task.CreatedDate.ToString().Split(" ")[0]).ToList()},
             {"Task Name",teamsTasks.Select(task => task.Name).ToList()},
             {"Registered Hours", teamsTasks.Select(task => task.LoggedHours.ToString()).ToList()},
         };
