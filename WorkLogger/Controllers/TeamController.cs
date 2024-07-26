@@ -133,10 +133,30 @@ public class TeamController(IMediator mediator) : ControllerBase
     {
         var companyId = GetCompanyId(User.Claims.ToList());
         if (companyId.HasValue == false) return BadRequest();
-        var result = await _mediator.Send(new GetAllTeamMembersNamesQuery(id));
+        
+        var result = await _mediator.Send(new GetAllTeamMembersNamesQuery(id, companyId.Value));
 
         if (result.Success) return Ok(result.Data);
 
+        return StatusCode(500, result.ErrorsList);
+    }
+    
+    [HttpPost("summary")]
+    public async Task<ActionResult> GetSummaryFile(CreateSummaryFileRequestDto dto)
+    {
+        var companyId = GetCompanyId(User.Claims.ToList());
+        if (companyId.HasValue == false) return BadRequest();
+
+        var result = await _mediator.Send(new CreateSummaryFileQuery(dto));
+
+        if (result.Success)
+        { 
+            return new FileStreamResult(result.Data.Stream, result.Data.MimeType)
+            {
+                FileDownloadName = result.Data.FileName
+            };
+        }
+        
         return StatusCode(500, result.ErrorsList);
     }
     

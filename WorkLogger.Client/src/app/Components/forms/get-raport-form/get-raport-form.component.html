@@ -1,0 +1,31 @@
+<div class="card mb-3" style="width: 50vw; margin: auto; top: 2rem; background-color: #242526">
+  <div class="card-body">
+    <form [formGroup]="getRaportForm">
+      <h2 class="card-title textColor">Get raport</h2>
+
+      <!-- Team Selection -->
+      <div class="flex-grow-1">
+        <label class="form-label" for="team">Team</label>
+        <select class="form-control" id="team" formControlName="team">
+          <option *ngFor="let team of teamsNames" [value]="team.id">{{team.name}}</option>
+        </select>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label" for="startDate">Start Date</label>
+          <input type="date" id="startDate" class="form-control" formControlName="startDate">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="endDate">End Date</label>
+          <input type="date" id="endDate" class="form-control" formControlName="endDate">
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <br>
+      <button [disabled]="!getRaportForm.valid" class="btn btn-primary" type="submit" (click)="onSubmit()">generate</button>
+
+    </form>
+  </div>
+</div>

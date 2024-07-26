@@ -8,6 +8,9 @@ public class Migrator
 {
     public static void Migrate(string connectionString, string fullPathToScripts)
     {
+        Environment.SetEnvironmentVariable("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "0");
+        AppContext.SetSwitch("System.Globalization.Invariant", false);
+        
         EnsureDatabase.For.SqlDatabase(connectionString);
 
         var upgrader =

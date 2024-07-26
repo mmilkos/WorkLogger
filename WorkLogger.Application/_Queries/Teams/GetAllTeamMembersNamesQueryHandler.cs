@@ -18,13 +18,16 @@ public class GetAllTeamMembersNamesQueryHandler : IRequestHandler<GetAllTeamMemb
     public async Task<OperationResult<UsersNamesResponseDto>> Handle(GetAllTeamMembersNamesQuery request, CancellationToken cancellationToken)
     {
         var teamId = request.TeamId;
+        var companyId = request.CompanyId;
         var result = new OperationResult<UsersNamesResponseDto>();
         var names = new UsersNamesResponseDto()
         {
             Names = []
         };
 
-        var users = await _repository.GetAllEntitiesAsync<User>(user => user.TeamId == teamId);
+        var users = await _repository.GetAllEntitiesAsync<User>(
+            user => user.TeamId == teamId 
+                    && user.CompanyId == companyId);
 
         foreach (var user in users) names.Names.Add(
                 new UserNameAndRoleResponseDto()

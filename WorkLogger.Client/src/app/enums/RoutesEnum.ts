@@ -6,5 +6,6 @@
   Create = "create",
   Users = "users",
   Id = "/:id",
-  Tasks = "tasks"
+  Tasks = "tasks",
+  Raports = "raports"
 }

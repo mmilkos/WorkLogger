@@ -40,7 +40,6 @@ public class UpdateTaskCommandHandler : IRequestHandler<UpdateTaskCommand, Opera
         catch (Exception e)
         {
             result.AddError(e.Message);
-            return result;
         }
 
         return result;
