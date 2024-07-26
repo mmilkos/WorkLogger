@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from "@angular/common/http";
 import {CreateTeamDto} from '../DTOs/createTeamDto';
 import {Observable, Subject} from "rxjs";
 import { AccountService } from './account.service';
@@ -80,5 +80,15 @@ export class TeamService {
       {
         headers: header
       })
+  }
+
+  getSummaryFile(dto: any) : Observable<HttpResponse<Blob>> {
+    const header : HttpHeaders = this.accoount.getHeader();
+    return this.http.post(`${this.apiUrl}/summary`, dto,
+      {
+        headers: header,
+        observe: 'response',
+        responseType: 'blob'
+    });
   }
 }

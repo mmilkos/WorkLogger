@@ -30,6 +30,8 @@ import { TasksComponent } from './Components/Pages/tasks/tasks.component';
 import { AddTaskFormComponent } from './Components/forms/add-task-form/add-task-form.component';
 import { TaskListComponent } from './Components/lists/task-list/task-list.component';
 import { TaskDetailsCardComponent } from './Components/details/tasks/task-details-card/task-details-card.component';
+import { RaportsComponent } from './Components/Pages/raports/raports.component';
+import { GetRaportFormComponent } from './Components/forms/get-raport-form/get-raport-form.component';
 
 
 
@@ -54,6 +56,8 @@ import { TaskDetailsCardComponent } from './Components/details/tasks/task-detail
     AddTaskFormComponent,
     TaskListComponent,
     TaskDetailsCardComponent,
+    RaportsComponent,
+    GetRaportFormComponent,
   ],
   imports: [
     BrowserModule,

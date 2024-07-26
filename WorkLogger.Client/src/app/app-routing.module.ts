@@ -8,6 +8,7 @@ import { RoutesEnum } from './enums/RoutesEnum';
 import { UsersComponent } from './Components/Pages/users/users.component';
 import { TeamDetailsComponent } from './Components/Pages/team-details/team-details.component';
 import { TasksComponent } from './Components/Pages/tasks/tasks.component';
+import { RaportsComponent } from './Components/Pages/raports/raports.component';
 
 
 const routes: Routes =
@@ -18,6 +19,7 @@ const routes: Routes =
     {path: RoutesEnum.Teams + RoutesEnum.Id, component: TeamDetailsComponent},
     {path: RoutesEnum.Users, component: UsersComponent},
     {path: RoutesEnum.Tasks, component: TasksComponent},
+    {path: RoutesEnum.Raports, component: RaportsComponent},
     {path: '**', component: AboutComponent, pathMatch: 'full' },
   ];
 
