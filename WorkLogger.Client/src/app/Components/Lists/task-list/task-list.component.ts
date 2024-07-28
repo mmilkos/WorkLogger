@@ -53,7 +53,6 @@ export class TaskListComponent implements OnDestroy, OnInit, AfterViewInit
       this.pageSize = pageSize;
       this.pageIndex = page -1;
       this.dataSource.data = pagedResult.dataList;
-      console.log(pagedResult.dataList)
     });
   }
 

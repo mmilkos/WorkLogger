@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using WorkLogger.Application._Commands;
+using WorkLogger.Domain.Common;
 
 namespace WorkLogger.Application.Extensions;
 
@@ -35,6 +36,21 @@ public static class ServiceCollectionExtension
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
             };
 
+        });
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy(Auth.TeamsManagementPolicy, policy => 
+                policy.RequireRole(Auth.CEORole, Auth.AdminRole));
+            
+            options.AddPolicy(Auth.UsersManagementPolicy, policy => 
+                policy.RequireRole(Auth.CEORole, Auth.AdminRole));
+            
+            options.AddPolicy(Auth.ReportManagementPolicy, policy => 
+                policy.RequireRole(Auth.CEORole, Auth.AdminRole, Auth.ManagerRole));
+            
+            options.AddPolicy(Auth.TaskManagementPolicy, policy => 
+                policy.RequireRole(Auth.CEORole, Auth.AdminRole, Auth.ManagerRole, Auth.EmployeeRole));
         });
     }
 }

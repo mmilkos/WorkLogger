@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkLogger.Application._Commands;
 using WorkLogger.Application._Queries.Users;
+using WorkLogger.Domain.Common;
 using WorkLogger.Domain.DTOs;
 using WorkLogger.Domain.Enums;
 
@@ -16,6 +17,7 @@ public class AccountController(IMediator mediator) : ControllerBase
 {
     private IMediator _mediator = mediator;
     
+    [Authorize(Policy = Auth.UsersManagementPolicy)]
     [HttpPost("register")]
     public async Task<ActionResult> RegisterUser(RegisterUserRequestDto registerRequestDto)
     {

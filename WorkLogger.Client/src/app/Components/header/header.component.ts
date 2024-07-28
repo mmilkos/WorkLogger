@@ -4,6 +4,7 @@ import { LoginUserDto } from '../../DTOs/loginDto.model';
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import { RoutesEnum } from '../../enums/RoutesEnum';
+import { RoleEnum } from '../../enums/roleEnum';
 import { AccountService } from '../../services/account.service';
 
 
@@ -15,9 +16,10 @@ import { AccountService } from '../../services/account.service';
 export class HeaderComponent
 {
   routesEnum = RoutesEnum
+  roleEnum = RoleEnum
 
 
-  constructor(private accountService: AccountService,
+  constructor(public accountService: AccountService,
               private toastrService : ToastrService,
               private router: Router) {
   }
@@ -39,6 +41,9 @@ export class HeaderComponent
     this.accountService.login(dto).subscribe(
       response =>
       {
+
+
+
         this.accountService.setToken(response.jwtToken);
         this.toastrService.success("Logged in", "Succes")
         this.router.navigateByUrl('/' + RoutesEnum.About)
@@ -56,5 +61,13 @@ export class HeaderComponent
 
   get isLoggedIn(): boolean {
     return this.accountService.isLoggedIn;
+  }
+
+  hasRoles(roles: string[])
+  {
+    // @ts-ignore
+    let role = this.accountService.currentUser.role;
+
+    return roles.includes(role)
   }
 }

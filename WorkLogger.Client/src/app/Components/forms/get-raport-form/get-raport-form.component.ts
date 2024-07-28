@@ -30,11 +30,7 @@ export class GetRaportFormComponent
   getTeamsNames()
   {
     this.teamService.getTeamsNames().subscribe(
-      teamsDto =>
-      {
-        this.teamsNames = teamsDto.teams;
-        console.log(teamsDto)
-      },
+      teamsDto => this.teamsNames = teamsDto.teams,
       error => this.toastrService.error("There was an error with loading teams names", "Error")
     )
   }
@@ -55,7 +51,7 @@ export class GetRaportFormComponent
           link.click();
         } else console.log("No response body");
       },
-      (error) => console.log(error.error)
+      (error) => this.toastrService.error("There was an error with downloading file", "Error")
     );
   }
 

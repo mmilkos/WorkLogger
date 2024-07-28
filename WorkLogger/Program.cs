@@ -25,7 +25,8 @@ if (app.Environment.IsDevelopment())
 const string origin = "http://localhost:4200";
 app.UseCors(options => options
     .AllowAnyMethod()
-    .AllowAnyHeader().WithOrigins(origin)
+    .AllowAnyHeader()
+    .WithOrigins(origin)
     .WithExposedHeaders("Content-Disposition"));
 
 

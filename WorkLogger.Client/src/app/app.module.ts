@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
@@ -32,6 +32,7 @@ import { TaskListComponent } from './Components/lists/task-list/task-list.compon
 import { TaskDetailsCardComponent } from './Components/details/tasks/task-details-card/task-details-card.component';
 import { RaportsComponent } from './Components/Pages/raports/raports.component';
 import { GetRaportFormComponent } from './Components/forms/get-raport-form/get-raport-form.component';
+import { ForbiddenInterceptorComponent } from './interceptors/forbidden-interceptor/forbidden-interceptor.component';
 
 
 
@@ -58,6 +59,7 @@ import { GetRaportFormComponent } from './Components/forms/get-raport-form/get-r
     TaskDetailsCardComponent,
     RaportsComponent,
     GetRaportFormComponent,
+    ForbiddenInterceptorComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +77,8 @@ import { GetRaportFormComponent } from './Components/forms/get-raport-form/get-r
     MatCheckbox
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    { provide: HTTP_INTERCEPTORS, useClass: ForbiddenInterceptorComponent, multi: true }
   ],
   bootstrap: [AppComponent]
 })

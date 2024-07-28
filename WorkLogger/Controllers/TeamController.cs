@@ -7,17 +7,17 @@ using WorkLogger.Application._Queries.Teams;
 using WorkLogger.Domain.Common;
 using WorkLogger.Domain.DTOs;
 using WorkLogger.Domain.DTOs_responses;
-using WorkLogger.Domain.Entities;
 
 namespace WorkLogger.Controllers;
 
-[Authorize]
+
 [ApiController]
 [Route("api/team")]
 public class TeamController(IMediator mediator) : ControllerBase
 {
     private IMediator _mediator = mediator;
 
+    [Authorize(Policy = Auth.TeamsManagementPolicy)]
     [HttpPost("create")]
     public async Task<ActionResult> CreateTeam(CreateTeamRequestDto requestDto)
     {
@@ -33,6 +33,7 @@ public class TeamController(IMediator mediator) : ControllerBase
         return StatusCode(500, result.ErrorsList);
     }
     
+    [Authorize(Policy = Auth.TeamsManagementPolicy)]
     [HttpGet]
     public async Task<ActionResult<PagedResultResponseDto<TeamResponseDto>>> GetAllTeamsPaged([FromQuery] int page, [FromQuery] int pageSize)
     {
@@ -53,6 +54,7 @@ public class TeamController(IMediator mediator) : ControllerBase
         return StatusCode(500, result.ErrorsList);
     }
     
+    [Authorize(Policy = Auth.TeamsManagementPolicy)]
     [HttpGet("{id}")]
     public async Task<ActionResult<TeamDetailsResponseDto>> GetTeamDetails([FromRoute] int id)
     {
@@ -67,6 +69,7 @@ public class TeamController(IMediator mediator) : ControllerBase
     }
     
 
+    [Authorize(Policy = Auth.TeamsManagementPolicy)]
     [HttpPost("assignUser")]
     public async Task<ActionResult> AssignUserToTeam(AssignUserToTeamRequestDto requestDto)
     {
@@ -81,6 +84,7 @@ public class TeamController(IMediator mediator) : ControllerBase
         return StatusCode(500, result.ErrorsList);
     }
     
+    [Authorize(Policy = Auth.TeamsManagementPolicy)]
     [HttpPost("unAssignUser")]
     public async Task<ActionResult> UnAssignUserFromTeam(UnAssignUserFromTeamRequestDto requestDto)
     {
@@ -95,7 +99,7 @@ public class TeamController(IMediator mediator) : ControllerBase
         return StatusCode(500, result.ErrorsList);
     }
     
-    
+    [Authorize(Policy = Auth.TaskManagementPolicy)]
     [HttpGet("{id}/teamMembers")]
     public async Task<ActionResult> GetTeamMembersPaged([FromRoute] int id, [FromQuery] int page, [FromQuery] int pageSize)
     {
@@ -116,6 +120,8 @@ public class TeamController(IMediator mediator) : ControllerBase
         return StatusCode(500, result.ErrorsList);
     }
 
+    
+    [Authorize(Policy = Auth.TaskManagementPolicy)]
     [HttpGet("names")]
     public async Task<ActionResult<TeamsNamesResponseDto>> GetTeamsNames()
     {
@@ -128,6 +134,7 @@ public class TeamController(IMediator mediator) : ControllerBase
         return StatusCode(500, result.ErrorsList);
     }
     
+    [Authorize(Policy = Auth.TaskManagementPolicy)]
     [HttpGet("{id}/teamMembers/names")]
     public async Task<ActionResult<UsersNamesResponseDto>> GetTeamMembersNames([FromRoute] int id)
     {
@@ -141,6 +148,7 @@ public class TeamController(IMediator mediator) : ControllerBase
         return StatusCode(500, result.ErrorsList);
     }
     
+    [Authorize(Policy = Auth.TeamsManagementPolicy)]
     [HttpPost("summary")]
     public async Task<ActionResult> GetSummaryFile(CreateSummaryFileRequestDto dto)
     {

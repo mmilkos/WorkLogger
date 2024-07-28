@@ -13,6 +13,9 @@ export class AccountService {
   public currentUser: LoggedUser | undefined;
   public isLoggedIn: boolean = false;
 
+  public teamAndUserManagementRoles = ['CEO', 'Admin'];
+  public raportManagementRoles = ['CEO', 'Admin', "Manager"];
+  public tasksManagementRoles = ['CEO', 'Admin', "Manager", "Employee"];
 
   constructor(private http: HttpClient)
   {

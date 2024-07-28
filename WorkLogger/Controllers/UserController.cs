@@ -3,15 +3,15 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkLogger.Application._Queries.Users;
+using WorkLogger.Domain.Common;
 using WorkLogger.Domain.DTOs;
 using WorkLogger.Domain.DTOs_responses;
 
 namespace WorkLogger.Controllers;
 
-[Authorize]
+[Authorize(Policy = Auth.TeamsManagementPolicy)]
 [ApiController]
 [Route("api/user")]
-[AllowAnonymous]
 public class UserController(IMediator mediator) : ControllerBase 
 {
     private IMediator _mediator = mediator;

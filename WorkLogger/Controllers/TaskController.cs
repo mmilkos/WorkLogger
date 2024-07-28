@@ -3,12 +3,14 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkLogger.Application._Commands.Tasks;
+using WorkLogger.Domain.Common;
 using WorkLogger.Domain.DTOs;
 using WorkLogger.Domain.DTOs_responses;
+using WorkLogger.Domain.Enums;
 
 namespace WorkLogger.Controllers;
 
-[Authorize]
+[Authorize(Policy = Auth.TaskManagementPolicy)]
 [ApiController]
 [Route("api/task")]
 public class TaskController(IMediator mediator) : ControllerBase
