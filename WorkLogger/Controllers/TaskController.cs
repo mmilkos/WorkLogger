@@ -10,7 +10,7 @@ namespace WorkLogger.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("api/task")]
+[Route("api/tasks")]
 public class TaskController(IMediator mediator) : ControllerBase
 {
     private IMediator _mediator = mediator;
