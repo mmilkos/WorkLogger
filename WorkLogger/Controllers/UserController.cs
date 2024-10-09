@@ -10,7 +10,7 @@ namespace WorkLogger.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("api/user")]
+[Route("api/users")]
 [AllowAnonymous]
 public class UserController(IMediator mediator) : ControllerBase 
 {
