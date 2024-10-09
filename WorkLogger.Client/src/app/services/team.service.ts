@@ -15,7 +15,7 @@ import { UserIdAndName } from '../models/UserIdAndName.model';
   providedIn: 'root'
 })
 export class TeamService {
-  apiUrl = "http://localhost:41669/api/team";
+  apiUrl = "http://localhost:41669/api/teams";
   constructor(private http : HttpClient, private accoount: AccountService) { }
 
   createTeam(dto: CreateTeamDto): Observable<any>
