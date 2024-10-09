@@ -13,7 +13,7 @@ import { UpdateTaskDto } from '../DTOs/updateTaskDto.model';
 })
 export class TaskService {
 
-   apiUrl = "http://localhost:41669/api/task/";
+   apiUrl = "http://localhost:41669/api/tasks/";
   constructor(private http: HttpClient, private account: AccountService) { }
 
   addTask(task: AddTaskDto): Observable<any>
