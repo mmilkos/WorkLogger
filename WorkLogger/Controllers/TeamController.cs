@@ -13,7 +13,7 @@ namespace WorkLogger.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("api/team")]
+[Route("api/teams")]
 public class TeamController(IMediator mediator) : ControllerBase
 {
     private IMediator _mediator = mediator;
