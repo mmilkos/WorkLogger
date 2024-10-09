@@ -9,7 +9,7 @@ import { User } from '../models/User.model';
   providedIn: 'root'
 })
 export class UserService {
-  apiUrl = "http://localhost:41669/api/user";
+  apiUrl = "http://localhost:41669/api/users";
   constructor(private http : HttpClient, private accoount: AccountService) { }
 
   getUsersPaged(params: HttpParams): Observable<PagedResultModel<User>>
