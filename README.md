@@ -1,2 +1,1 @@
-Company management platform, enabling user registration and login, team creation and management of tasks and team 
-members and excel reports generation
+Company management platform, built with.NET and Angular, enables user registration and login, team creation, task and team member management, and Excel report generation.
