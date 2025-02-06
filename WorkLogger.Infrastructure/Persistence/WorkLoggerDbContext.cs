@@ -12,6 +12,8 @@ public class WorkLoggerDbContext(DbContextOptions<WorkLoggerDbContext> options) 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        
+        
         modelBuilder.Entity<Company>(entity =>
         {
             entity.HasKey(e => e.Id);

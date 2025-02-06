@@ -5,11 +5,12 @@ import { LoginUserDto } from '../DTOs/loginDto.model';
 import * as jwt_decoder from 'jwt-decode';
 import {LoggedUser} from '../models/loggedUser.model';
 import { RegisterUserDto } from '../DTOs/RegisterUserDto';
+import { WLConfig } from '../WLConfig';
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  apiUrl = "http://localhost:41669/api/account/";
+  apiUrl = WLConfig.apiUrl + "/account";
   public currentUser: LoggedUser | undefined;
   public isLoggedIn: boolean = false;
 
@@ -24,7 +25,7 @@ export class AccountService {
 
   login(dto: LoginUserDto): Observable<any>
   {
-    return this.http.post(this.apiUrl + "login", dto);
+    return this.http.post(this.apiUrl + "/login", dto);
   }
 
  public setToken(token: string): void
@@ -57,6 +58,6 @@ export class AccountService {
 
   registerUser(dto : RegisterUserDto): Observable<any>
   {
-    return this.http.post(this.apiUrl + "register", dto, { headers: this.getHeader() });
+    return this.http.post(this.apiUrl + "/register", dto, { headers: this.getHeader() });
   }
 }

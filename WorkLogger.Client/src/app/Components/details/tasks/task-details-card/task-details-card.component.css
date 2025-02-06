@@ -2,3 +2,9 @@ label
 {
   color: white;
 }
+
+.wrapper
+{
+  width: 50vw;
+  background-color: #242526
+}

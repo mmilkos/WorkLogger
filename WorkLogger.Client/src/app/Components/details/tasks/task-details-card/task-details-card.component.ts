@@ -19,6 +19,7 @@ export class TaskDetailsCardComponent implements OnInit
 
   ngOnInit(): void
   {
+    console.log("test")
     this.loadTaskDetails()
   }
 
@@ -59,7 +60,7 @@ export class TaskDetailsCardComponent implements OnInit
       {
         id: this.data.taskId,
         name: this.editTaskForm.get("taskName")?.value || "",
-        description: this.editTaskForm.get("taskDescription")?.value || "",
+        description: this.editTaskForm.get("taskDesc")?.value || "",
         // @ts-ignore
         LoggedHours: parseFloat(this.editTaskForm.get("loggedHours")?.value)  || 0
       }

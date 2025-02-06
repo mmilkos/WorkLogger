@@ -8,3 +8,10 @@
   opacity: 1 !important;
 }
 
+.wrapper
+{
+  max-width: 30rem;
+  margin: auto;
+  top: 2rem;
+  background-color: #242526
+}

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.FileProviders;
 using WorkLogger.Application.Extensions;
 using WorkLogger.Infrastructure.Extensions;
 
@@ -5,13 +6,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication(builder.Configuration);
-builder.Services.AddCors();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.WebHost.UseUrls("https://localhost:7178");
+
 
 var app = builder.Build();
 
@@ -22,21 +26,47 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-const string origin = "http://localhost:4200";
+const string backend = "https://localhost:7178";
+const string frontend = "https://localhost:4200";
 app.UseCors(options => options
     .AllowAnyMethod()
-    .AllowAnyHeader().WithOrigins(origin)
+    .AllowCredentials()
+    .AllowAnyHeader()
+    .WithOrigins(backend, frontend)
     .WithExposedHeaders("Content-Disposition"));
 
 
-/*app.UseHttpsRedirection();*/
-app.UseAuthentication();
+app.UseHttpsRedirection();
 
+app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
+/*app.UseDefaultFiles(new DefaultFilesOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "wwwroot/browser")
+    ),
+    RequestPath = ""
+});*/
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "wwwroot/browser")
+    ),
+    RequestPath = ""
+});
 
 app.MapControllers();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+
+
+app.MapFallbackToController("Index", "FallBack");
 
 
 app.Run();

@@ -3,6 +3,11 @@
   width: 45vw;
 }
 
+p
+{
+  color: white;
+}
+
 th, td {
   width: 100%;
   display: block;

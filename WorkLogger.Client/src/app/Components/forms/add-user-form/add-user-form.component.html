@@ -1,4 +1,4 @@
-<div class="card mb-3"style="width: 50vw; margin: auto; top: 2rem; background-color: #242526">
+<div class="card mb-3 wrapper">
   <div class="card-body">
     <form [formGroup]="addUserForm">
       <div class="row mb-3">
@@ -31,7 +31,7 @@
           <input type="password" class="form-control" id="password" formControlName="password">
         </div>
       </div>
-      <button [disabled]="!isFormValidValue" type="button" class="btn btn-primary" style="width: 100%" (click)="onSubmit()">Submit</button>
+      <button [disabled]="!isFormValidValue" type="button" class="btn btn-primary w-100" (click)="onSubmit()">Submit</button>
     </form>
   </div>
 </div>

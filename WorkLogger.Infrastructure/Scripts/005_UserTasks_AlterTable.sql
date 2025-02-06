@@ -1,5 +1,5 @@
 ﻿ALTER TABLE UserTasks
-    ADD CreatedDate DATE;
+    ADD COLUMN CreatedDate DATE;
 
 ALTER TABLE UserTasks
-    ADD LastUpdateDate DATE;
+    ADD COLUMN LastUpdateDate DATE;

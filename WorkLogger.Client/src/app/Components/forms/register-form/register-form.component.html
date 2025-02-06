@@ -1,4 +1,4 @@
-<div class="card mb-3" style="max-width: 30rem; margin: auto; top: 2rem; background-color: #242526">
+<div class="card mb-3 wrapper" style="">
   <div class="card-body">
     <form [formGroup]="registerForm">
       <h2 class="card-title textColor">Company</h2>
@@ -58,7 +58,7 @@
 
 
 
-      <button [disabled]="!isFormValidValue" type="button" class="btn btn-primary" style="width: 100%" (click)="onSubmit()">Submit</button>
+      <button [disabled]="!isFormValidValue" type="button" class="btn btn-primary w-100"  (click)="onSubmit()">Submit</button>
     </form>
   </div>
 </div>

@@ -4,6 +4,7 @@ using WorkLogger.Domain.Enums;
 
 namespace WorkLogger.Domain.Entities;
 
+[Table("users")]
 public class User : BaseEntity
 {
     public string Name { get; private set; }

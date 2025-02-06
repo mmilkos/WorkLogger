@@ -1,5 +1,8 @@
-﻿namespace WorkLogger.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace WorkLogger.Domain.Entities;
+
+[Table("usertasks")]
 public class UserTask
 {
     public int Id { get; set; }

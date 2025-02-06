@@ -8,3 +8,8 @@ button
   height: 50%;
   margin-top: 27px
 }
+.wrapper
+{
+  top: 2rem;
+  background-color: #242526
+}

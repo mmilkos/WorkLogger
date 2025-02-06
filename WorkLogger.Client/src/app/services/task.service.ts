@@ -7,13 +7,14 @@ import { PagedResultModel } from '../models/pagedResult.model';
 import { UserTask } from '../models/userTask.model';
 import { UserTaskDetails } from '../models/userTaskDetails.model';
 import { UpdateTaskDto } from '../DTOs/updateTaskDto.model';
+import { WLConfig } from '../WLConfig';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-   apiUrl = "http://localhost:41669/api/tasks/";
+  apiUrl = WLConfig.apiUrl + "/tasks";
   constructor(private http: HttpClient, private account: AccountService) { }
 
   addTask(task: AddTaskDto): Observable<any>
@@ -36,7 +37,7 @@ export class TaskService {
   getTaskDetails(taskId: number): Observable<UserTaskDetails>
   {
     let header = this.account.getHeader()
-    return this.http.get<UserTaskDetails>(this.apiUrl + taskId, { headers: header });
+    return this.http.get<UserTaskDetails>(this.apiUrl + `/${taskId}`, { headers: header });
   }
 
   updateTask(task: UpdateTaskDto): Observable<any>

@@ -1,4 +1,4 @@
-<header class="p-3" style="background-color: #242526">
+<header class="p-3 wrapper">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
@@ -11,7 +11,7 @@
           <li *ngIf="isLoggedIn"><a routerLink="{{routesEnum.Teams}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">Teams</a></li>
           <li *ngIf="isLoggedIn"><a routerLink="{{routesEnum.Users}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">Users</a></li>
           <li *ngIf="isLoggedIn"><a routerLink="{{routesEnum.Tasks}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">Tasks</a></li>
-          <li *ngIf="isLoggedIn"><a routerLink="{{routesEnum.Raports}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">Raports</a></li>
+          <li *ngIf="isLoggedIn"><a routerLink="{{routesEnum.Raports}}" class="nav-link px-2 text-secondary" routerLinkActive="text-white">Reports</a></li>
         </ul>
 
         <form *ngIf="!isLoggedIn" [formGroup]="loginForm" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex">

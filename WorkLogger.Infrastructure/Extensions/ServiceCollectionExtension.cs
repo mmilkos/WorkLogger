@@ -16,9 +16,8 @@ public static class ServiceCollectionExtension
         var scripts = configuration.GetConnectionString("Scripts");
         
         
-        services.AddDbContext<WorkLoggerDbContext>(options => options.UseSqlServer(connectionString));
+        services.AddDbContext<WorkLoggerDbContext>(options => options.UseNpgsql(connectionString).UseLowerCaseNamingConvention());
         services.AddScoped<IWorkLoggerRepository, WorkLoggerRepository>();
-        Migrator.Migrate(connectionString, scripts);
-        Migrator.Migrate(testConnectionString, scripts);
+      //  Migrator.Migrate(connectionString, scripts);
     }
 }

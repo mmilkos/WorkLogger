@@ -1,6 +1,6 @@
 <div class="card mb-3 header">
-  <div style="display: flex; justify-content: space-between; align-items: center;">
-    <p style="color: white">{{ teamMode ? 'Team members' : 'All users' }}</p>
+  <div class="d-flex justify-content-between align-items-center">
+    <p>{{ teamMode ? 'Team members' : 'All users' }}</p>
     <button
       [disabled]="!selectedRowId"
       class="btn btn-primary float-end m-1"
@@ -49,7 +49,3 @@
   [pageSizeOptions]="[10]"
   showFirstLastButtons>
 </mat-paginator>
-
-<!--[length]="totalRecords"
-  [pageIndex]="pageIndex"
-  [pageSize]="pageSize"-->

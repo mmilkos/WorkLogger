@@ -1,8 +1,8 @@
 ﻿CREATE TABLE Teams (
-                           Id INT PRIMARY KEY IDENTITY,
-                           Name NVARCHAR(255)
+                       Id SERIAL PRIMARY KEY,
+                       Name VARCHAR(255)
 );
 
-ALTER TABLE Users ADD TeamId INT NULL;
+ALTER TABLE Users ADD COLUMN TeamId INT NULL;
 
-ALTER TABLE Users ADD FOREIGN KEY (TeamId) REFERENCES Teams(Id);
+ALTER TABLE Users ADD CONSTRAINT FK_Users_Teams FOREIGN KEY (TeamId) REFERENCES Teams(Id);

@@ -1,5 +1,5 @@
 ﻿ALTER TABLE Teams
-    ADD CompanyId INT;
+    ADD COLUMN CompanyId INT;
 
 ALTER TABLE Teams
-    ADD FOREIGN KEY (CompanyId) REFERENCES Companies(Id);
+    ADD CONSTRAINT FK_Teams_Companies FOREIGN KEY (CompanyId) REFERENCES Companies(Id);

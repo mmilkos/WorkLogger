@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using DbUp;
-using Microsoft.Data.SqlClient;
+﻿using DbUp;
 
 namespace WorkLogger.Infrastructure;
 
@@ -11,11 +9,11 @@ public class Migrator
         Environment.SetEnvironmentVariable("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "0");
         AppContext.SetSwitch("System.Globalization.Invariant", false);
         
-        EnsureDatabase.For.SqlDatabase(connectionString);
+        EnsureDatabase.For.PostgresqlDatabase(connectionString);
 
         var upgrader =
             DeployChanges.To
-                .SqlDatabase(connectionString)
+                .PostgresqlDatabase(connectionString)
                 .WithScriptsFromFileSystem(fullPathToScripts)
                 .WithTransaction()
                 .LogToConsole()

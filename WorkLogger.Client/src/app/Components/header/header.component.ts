@@ -44,7 +44,12 @@ export class HeaderComponent
         this.router.navigateByUrl('/' + RoutesEnum.About)
         this.loginForm.reset();
       },
-      error => error.error.forEach((error: string) => this.toastrService.error(error, 'Error'))
+      error =>
+      {
+        console.log(error.error)
+
+        error.error.forEach((error: any) => this.toastrService.error(error, 'Error'))
+      }
     );
   }
   logOut()

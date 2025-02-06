@@ -10,12 +10,13 @@ import {User, UsersNamesResponseDto} from '../models/User.model';
 import { UserTeamDto } from '../DTOs/UserTeamDto';
 import { TeamsNamesDto } from '../DTOs/TeamsNamesDto.model';
 import { UserIdAndName } from '../models/UserIdAndName.model';
+import { WLConfig } from '../WLConfig';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamService {
-  apiUrl = "http://localhost:41669/api/teams";
+  apiUrl = WLConfig.apiUrl + "/teams";
   constructor(private http : HttpClient, private accoount: AccountService) { }
 
   createTeam(dto: CreateTeamDto): Observable<any>

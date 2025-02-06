@@ -4,12 +4,14 @@ import { AccountService } from './account.service';
 import {Observable} from "rxjs";
 import { PagedResultModel } from '../models/pagedResult.model';
 import { User } from '../models/User.model';
+import { WLConfig } from '../WLConfig';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  apiUrl = "http://localhost:41669/api/users";
+
+  apiUrl = WLConfig.apiUrl + "/users";
   constructor(private http : HttpClient, private accoount: AccountService) { }
 
   getUsersPaged(params: HttpParams): Observable<PagedResultModel<User>>
