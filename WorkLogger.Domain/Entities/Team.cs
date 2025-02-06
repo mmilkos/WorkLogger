@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WorkLogger.Domain.Entities;
 
+[Table("teams")]
 public class Team : BaseEntity
 {
     public string Name { get; private set; }
