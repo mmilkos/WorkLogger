@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-using MediatR;
+﻿using MediatR;
 using WorkLogger.Domain;
 using WorkLogger.Domain.Common;
 using WorkLogger.Domain.Entities;
@@ -18,8 +16,6 @@ public class RegisterUserCommandHandler(IWorkLoggerRepository repository) : IReq
         var operationResult = new OperationResult<Unit>();
         
         var dto = request.UserRequestDto;
-        Roles roles;
-       
 
         var userInDb = await _repository.FindEntityByConditionAsync<User>(user => user.UserName == dto.UserName);
         var company = await _repository.FindEntityByIdAsync<Company>(dto.CompanyId);
@@ -38,17 +34,10 @@ public class RegisterUserCommandHandler(IWorkLoggerRepository repository) : IReq
             return operationResult;
         }
         
-        User user;
-
-        using ( var hmac = new HMACSHA512())
-        {
-            user = new User.Builder()
-                .WithCompanyInfo(companyId: dto.CompanyId, teamId: null, role: (Roles)dto.Role)
-                .WithUserCredentials(name: dto.Name, surname: dto.Surname, userName: dto.UserName)
-                .WithPassword(passwordHash: hmac.ComputeHash(Encoding.UTF8.GetBytes(dto.Password)),
-                    passwordSalt: hmac.Key)
-                .Build();
-        }
+        var user = new User.Builder()
+            .WithCompanyInfo(companyId: dto.CompanyId, teamId: null, role: (Roles)dto.Role)
+            .WithUserCredentials(name: dto.Name, surname: dto.Surname, userName: dto.UserName, password: dto.Password)
+            .Build();
         
         try
         {

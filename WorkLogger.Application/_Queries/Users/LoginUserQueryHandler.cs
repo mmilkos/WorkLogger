@@ -1,8 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using WorkLogger.Domain;
@@ -18,11 +18,13 @@ public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, OperationRe
 {
     private IWorkLoggerRepository _repository;
     private IConfiguration _configuration;
+    private PasswordHasher<User> _hasher;
     
     public LoginUserQueryHandler(IWorkLoggerRepository repository, IConfiguration configuration)
     {
         _repository = repository;
         _configuration = configuration;
+        _hasher = new PasswordHasher<User>();
     }
     
     public async Task<OperationResult<UserLoginResponseDto>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
@@ -56,19 +58,11 @@ public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, OperationRe
     private bool CheckCredentials(User? user, LoginUserRequestDto loginRequestDto)
     {
         if (user == null) return false;
-        
-        using var hmac = new HMACSHA512(user.PasswordSalt);
-        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginRequestDto.Password));
-        
-        for (int i = 0; i < computedHash.Length; i++)
-        {
-            if (computedHash[i] != user.PasswordHash[i])
-            {
-                return false;
-            }
-        }
 
-        return true;
+        var result = _hasher.VerifyHashedPassword(user: null, hashedPassword: user.PasswordHash,
+            providedPassword: loginRequestDto.Password);
+        var isValid = result == PasswordVerificationResult.Success;
+        return isValid;
     }
 
     private string GenerateJwtToken(User user)
